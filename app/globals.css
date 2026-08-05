@@ -1289,6 +1289,19 @@ footer h2 {
 
 .ability > span { color: var(--muted); font-size: 10px; }
 .ability h3 { margin: 0; font-size: clamp(21px, 2.2vw, 32px); font-weight: 500; }
+.ability h3 small {
+  display: block;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .16em;
+}
+.ability-body {
+  display: grid;
+  gap: 6px;
+  min-width: 0;
+}
 .ability p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.75; overflow-wrap: anywhere; }
 .ability i { font-style: normal; }
 

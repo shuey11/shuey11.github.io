@@ -3,44 +3,55 @@
 import { useEffect, useRef, useState } from "react";
 import { ProjectItem, projects } from "./projects/project-data";
 
+type Ability = {
+  title: string;
+  category?: string;
+  technologies: string;
+  projects: string;
+  description?: string;
+};
+
 const abilities = [
-  [
-    "移动应用开发",
-    "Flutter · Dart · Android · 移动端UI · 状态管理 · 通知 · 语音与音频功能",
-  ],
-  [
-    "Web与前端",
-    "React · TypeScript · JavaScript · HTML · CSS · Bootstrap · 响应式设计",
-  ],
-  [
-    "后端与数据",
-    "Firebase Authentication · Cloud Firestore · PHP · MySQL · SQL · 关系数据库 · CRUD · 多表查询",
-  ],
-  [
-    "VR、3D与互动媒体",
-    "Unity · C# · Blender · Autodesk 3ds Max · XR Interaction Toolkit · OpenXR · 3D建模 · 动画与交互",
-  ],
-  [
-    "产品与开发流程",
-    "用户研究 · 需求分析 · UI/UX · 增量开发 · Agile · 系统测试 · UAT · 团队协作",
-  ],
-];
+  {
+    title: "移动应用与前端",
+    technologies: "Flutter · Dart · React · TypeScript · HTML · CSS · Bootstrap",
+    projects: "RiseUp · HotelEase · Travel Board Builder · 个人作品集网站",
+  },
+  {
+    title: "数据与后端",
+    technologies: "Firebase Authentication · Cloud Firestore · Local JSON · PHP · MySQL · DataTables",
+    projects: "RiseUp · HotelEase · Travel Board Builder · Drawing Art Supplies",
+  },
+  {
+    title: "VR 与交互",
+    technologies: "Unity · C# · OpenXR · VR Interaction · Collision · Task System",
+    projects: "UKM Green Campus Rescue VR · RiseUp Avatar",
+  },
+  {
+    title: "3D 与视觉",
+    technologies: "3ds Max · Blender · Environment Modeling · Materials · Lighting · Camera Animation · Figma",
+    projects: "Good Omens Bookshop · RiseUp · HotelEase",
+  },
+  {
+    title: "AI 辅助开发",
+    category: "AI-ASSISTED DEVELOPMENT",
+    technologies: "ChatGPT · OpenAI Codex · Stitch · Prompt Engineering · AI-assisted Development",
+    projects: "个人作品集网站 · Travel Board Builder",
+    description:
+      "使用 ChatGPT、OpenAI Codex 和 Stitch 辅助需求拆解、AI-assisted Prototyping、Code Generation、Code Refactoring 和 Debugging；最终代码由本人完成 Human Review、修改、测试与 Build & Deployment。",
+  },
+] satisfies Ability[];
 
 const coursework = [
-  ["计算机程序设计", "Programming"],
-  ["离散数学", "Discrete Mathematics"],
-  ["程序设计与问题解决", "Programming and Problem Solving"],
+  ["移动应用开发", "Mobile Application Development"],
+  ["Web程序设计", "Web Programming"],
   ["数据库", "Database"],
   ["高级数据库", "Advanced Database"],
-  ["Web程序设计", "Web Programming"],
-  ["移动编程", "Mobile Programming"],
-  ["软件需求工程", "Software Requirements Engineering"],
+  ["软件需求工程", "Requirements Engineering"],
   ["软件测试", "Software Testing"],
-  ["信息共享", "Information Sharing"],
-  ["多媒体系统软件开发", "Multimedia Systems Development"],
-  ["数字音频与视频技术", "Digital Audio and Video Technology"],
+  ["多媒体编程", "Multimedia Programming"],
   ["3D建模", "3D Modelling"],
-  ["VR", "Virtual Reality"],
+  ["虚拟现实", "Virtual Reality"],
 ];
 
 const activities = [
@@ -71,7 +82,7 @@ const activities = [
 const contact = {
   email: "nshuey@163.com",
   github: "https://github.com/shuey11",
-  resume: "#",
+  resume: "/resume/Ning-Shuyi-Resume.pdf",
 };
 
 function Arrow() {
@@ -135,7 +146,7 @@ function ProjectPreviewMedia({ project }: { project: ProjectItem }) {
       data-project={project.slug}
       href={`/projects/${project.slug}/`}
       ref={wrapRef}
-      aria-label={`打开 ${project.title} 项目概览`}
+      aria-label={`打开 ${project.title} 技术详情`}
     >
       {project.video && canPlayVideo && !videoFailed ? (
         <video
@@ -204,7 +215,7 @@ export default function Home() {
           <a href="#skills">能力</a>
           <a href="#contact">联系</a>
         </div>
-        <a className="nav-cta" href="#contact">
+        <a className="nav-cta" href={contact.resume} rel="noreferrer" target="_blank">
           简历 <Arrow />
         </a>
       </nav>
@@ -212,19 +223,16 @@ export default function Home() {
       <section className="hero" id="top">
         <div className="hero-grid" aria-hidden="true" />
         <div className="hero-copy">
-          <p className="hero-identity reveal">
-            SOFTWARE ENGINEERING · INTERACTIVE MEDIA
-          </p>
+          <p className="hero-identity reveal">SOFTWARE ENGINEERING · INTERACTIVE MEDIA</p>
           <h1>
-            <span>从系统逻辑，</span>
-            <span>到可感知的</span>
-            <span className="gradient-text">数字体验。</span>
+            <span>软件工程与</span>
+            <span className="gradient-text">交互媒体开发者</span>
           </h1>
           <p className="hero-intro">
-            我是宁舒依，一名软件工程与互动媒体开发者。目前就读于马来西亚国立大学软件工程（多媒体系统开发）专业，关注应用开发、系统实现与互动体验，探索软件技术在移动端、Web、实时交互和3D场景中的不同应用。我希望将清晰的系统逻辑与有参与感的视觉体验结合起来，创造真正可以使用、探索和感受的数字产品。
+            我目前就读于 UKM 软件工程（多媒体系统开发）专业，项目经验涵盖移动应用、云端数据、VR 游戏、三维环境和数据库后台。我能够从需求分析、数据结构和用户流程开始，完成界面、功能、测试与最终展示。
           </p>
           <div className="hero-tags" aria-label="关键词">
-            {["应用开发","Web技术","数据与系统","实时交互","VR与3D","互动媒体",].map(
+            {["Flutter / Dart","Firebase / Firestore","Unity / C#","React / TypeScript","PHP / MySQL","3ds Max / Blender"].map(
               (item) => (
                 <span key={item}>{item}</span>
               ),
@@ -235,10 +243,13 @@ export default function Home() {
           </p>
           <div className="hero-actions">
             <a className="button button-dark" href="#projects">
-              探索项目 <span>↓</span>
+              查看技术项目 <span>↓</span>
             </a>
-            <a className="button button-ghost" href="#about">
-              认识我
+            <a className="button button-ghost" href={contact.resume} rel="noreferrer" target="_blank">
+              查看简历
+            </a>
+            <a className="button button-ghost" href={contact.github} rel="noreferrer" target="_blank">
+              GitHub <Arrow />
             </a>
           </div>
         </div>
@@ -308,15 +319,14 @@ export default function Home() {
         </div>
         <p className="section-index">00 / ABOUT</p>
         <div>
-          <h2>
-            我不只制作界面，
-            <br />
-            也构建界面背后的系统。
-          </h2>
+          <h2>关于我</h2>
           <div className="about-row">
             <div className="about-copy">
               <p>
-                我就读于马来西亚国立大学软件工程（多媒体系统开发）专业。项目覆盖Flutter与Firebase移动应用、PHP与MySQL数据系统、Unity VR交互及3D内容制作，呈现从需求分析、系统实现到测试验证的完整开发过程。
+                我是一名软件工程（多媒体系统开发）学生，主要项目涉及 Flutter、Firebase、Unity、VR、3D 环境和 PHP / MySQL。相比只实现单个页面，我更关注一个系统中的功能流程、数据关系、状态变化和用户操作如何连接。
+              </p>
+              <p>
+                我的个人项目通常由需求整理、功能规划、界面设计、开发、测试和最终展示组成；在团队项目中，我也参与任务分配、数据字段统一、版本整合和流程联调。
               </p>
               <div className="education-brand">
                 <div className="education-logo-shell">
@@ -328,7 +338,7 @@ export default function Home() {
                 </div>
                 <div>
                   <strong>Universiti Kebangsaan Malaysia</strong>
-                  <span>Software Engineering · 2023—2027</span>
+                  <span>Bachelor of Software Engineering · Multimedia Systems Development</span>
                 </div>
               </div>
             </div>
@@ -340,16 +350,14 @@ export default function Home() {
               <div>
                 <dt>学历</dt>
                 <dd>
-                  软件工程（多媒体系统开发）荣誉学士
+                  Bachelor of Software Engineering
                   <br />
-                  B. Software Engineering (Hons.)
-                  <br />
-                  Multimedia System Development
+                  Multimedia Systems Development
                 </dd>
               </div>
               <div>
-                <dt>时间</dt>
-                <dd>2023.09—2027.08</dd>
+                <dt>预计毕业</dt>
+                <dd>August 2027</dd>
               </div>
               <div className="education-stats">
                 <span>
@@ -371,12 +379,12 @@ export default function Home() {
           <p className="section-index">01 / CORE COURSEWORK</p>
           <div className="credentials-heading">
             <h2>
-              核心课程
+              相关课程
               <br />
-              Core Coursework
+              Related Coursework
             </h2>
             <p>
-              从编程、数据库、Web与移动开发，到需求、测试、多媒体系统和3D内容，课程训练围绕可实现的软件产品展开。
+              课程覆盖移动应用、Web、数据库、需求、测试、多媒体编程、3D 建模与 VR，为项目中的系统实现和交互开发提供基础。
             </p>
           </div>
           <div className="course-cloud">
@@ -419,9 +427,9 @@ export default function Home() {
         <h2>
           六个项目，
           <br />
-          六种把想法变成体验的方式。
+          六种软件与交互系统实现。
         </h2>
-        <p>向下滚动，进入每个项目。</p>
+        <p>每个项目展示类型、职责、核心技术、技术重点和真实规模或结果。</p>
       </section>
 
       <section className="projects">
@@ -438,6 +446,14 @@ export default function Home() {
                 <h3>{project.title}</h3>
                 <h4>{project.tagline}</h4>
                 <p className="project-description">{project.summary}</p>
+                <p className="project-description">
+                  <strong>我的角色：</strong>{project.role}
+                </p>
+                {project.solution ? (
+                  <p className="project-description">
+                    <strong>技术重点：</strong>{project.solution}
+                  </p>
+                ) : null}
                 <div className="tech-list">
                   {project.technologies.map((item) => (
                     <span key={item}>{item}</span>
@@ -456,7 +472,7 @@ export default function Home() {
                 ))}
               </div>
               <a className="project-link" href={`/projects/${project.slug}/`}>
-                项目概览 <Arrow />
+                查看技术详情 <Arrow />
               </a>
             </div>
           </article>
@@ -466,18 +482,21 @@ export default function Home() {
       <section className="skills" id="skills">
         <div className="skills-heading">
           <p className="section-index">09 / CAPABILITIES</p>
-          <h2>
-            工具会变化，
-            <br />
-            解决问题的能力会留下。
-          </h2>
+          <h2>技术能力与项目应用</h2>
         </div>
         <div className="ability-list">
-          {abilities.map(([title, body], index) => (
-            <div className="ability" key={title}>
+          {abilities.map((ability, index) => (
+            <div className="ability" key={ability.title}>
               <span>0{index + 1}</span>
-              <h3>{title}</h3>
-              <p>{body}</p>
+              <h3>
+                {ability.title}
+                {ability.category ? <small>{ability.category}</small> : null}
+              </h3>
+              <div className="ability-body">
+                <p>{ability.technologies}</p>
+                <p><strong>使用项目：</strong>{ability.projects}</p>
+                {ability.description ? <p>{ability.description}</p> : null}
+              </div>
               <i>↗</i>
             </div>
           ))}
@@ -487,13 +506,9 @@ export default function Home() {
       <footer id="contact">
         <div className="footer-liquid" aria-hidden="true" />
         <p className="section-index">10 / CONTACT</p>
-        <h2>
-          准备把下一个想法，
-          <br />
-          变成可以体验的产品。
-        </h2>
+        <h2>一起讨论软件、移动应用与交互项目</h2>
         <p className="footer-copy">
-          欢迎联系我，了解项目详情或讨论实习与合作机会。
+          我正在寻找软件开发、前端开发、移动应用、游戏与交互媒体相关的实习和项目机会。可以通过邮箱、GitHub 或简历进一步了解我的项目经验。
         </p>
         <div className="contact-grid" aria-label="联系方式">
           <span className="contact-link">
@@ -502,26 +517,18 @@ export default function Home() {
           </span>
           <a className="contact-link" href={contact.github} rel="noreferrer" target="_blank">
             <small>GitHub</small>
-            shuey11 <Arrow />
+            查看 GitHub <Arrow />
           </a>
-          {contact.resume === "#" ? (
-            <span className="contact-link">
-              <small>下载简历</small>
-              简历即将更新
-            </span>
-          ) : (
-            <a
-              className="contact-link"
-              href={contact.resume}
-              rel="noreferrer"
-              target="_blank"
-            >
-              <small>下载简历</small>
-              Resume <Arrow />
-            </a>
-          )}
+          <a
+            className="contact-link"
+            href={contact.resume}
+            download="Ning-Shuyi-Resume.pdf"
+          >
+            <small>下载简历</small>
+            下载简历 <Arrow />
+          </a>
         </div>
-        <p className="location-note">Malaysia / Ningbo, China</p>
+        <p className="location-note">Ningbo, China</p>
         <div className="footer-bottom">
           <span>Ning Shuyi © 2026</span>
           <div>

@@ -13,17 +13,17 @@ export function GoodOmensOverview() {
         {
           eyebrow: "BACKGROUND",
           title: "项目背景",
-          body: "以《Good Omens》中的 Aziraphale 书店为参考，通过多个影视镜头判断立柱、书架、门窗、楼梯和家具之间的空间关系，并将局部画面整合为连续的三维环境。",
+          body: "电视剧画面只展示经过摄影机构图后的局部空间，没有完整平面图。本项目通过比较多个镜头中的立柱、书架、门窗、楼梯、家具和雕像，推导它们在统一空间中的相对位置。",
         },
         {
           eyebrow: "MY ROLE",
           title: "我的角色",
-          body: "个人三维环境项目。独立完成参考分析、空间推导、环境建模、室内陈设、材质、灯光、摄影机动画和最终渲染。",
+          body: "个人三维环境项目。独立完成影视画面整理、空间比例推导、环境结构搭建、家具与陈设建模、材质调整、灯光布置、摄影机动画和最终渲染。",
         },
         {
           eyebrow: "GOAL",
           title: "项目目标",
-          body: "不是只复制单一镜头，而是重建一套可从不同角度观察的书店空间，同时保留深色木质结构、暖色照明和密集旧书陈设。",
+          body: "项目不是只复制单一镜头，而是建立一套能从不同方向观察的连续书店空间，同时保留原作深色木质结构、暖色照明和密集旧书陈设。",
         },
         {
           eyebrow: "STACK",
@@ -88,7 +88,7 @@ function GoodOmensReferenceComparison({ project, onOpen }: { project: ProjectIte
         className="goodomens-section-title"
         eyebrow="REFERENCE COMPARISON"
         title="影视画面与三维重建对照"
-        body="三组组合图分别展示入口区域、书桌区域和雕像书架区域。每张图上方为电视剧参考画面，下方为我的 3D 重建结果，用于说明我如何从画面中的空间线索推导三维结构。"
+        body="三组对比图用于检查入口、书桌和雕像书架区域的结构关系。每张图片上方为电视剧参考，下方为我的三维重建。"
       />
       <div className="goodomens-comparison-list">
         {panels.map((panel, index) => (
@@ -112,17 +112,17 @@ function GoodOmensReconstructionProcess() {
     {
       index: "01",
       title: "参考分析与空间定位",
-      body: "比较多个镜头中反复出现的立柱、书架、门窗、雕像和家具，将它们作为空间定位点。再判断主要区域之间的方向、距离和遮挡关系。",
+      body: "比较多个镜头中反复出现的物件，建立入口、立柱、书架、楼梯和家具之间的空间关系。",
     },
     {
       index: "02",
       title: "环境建模与室内陈设",
-      body: "先建立墙体、地面、立柱、楼梯和书架等主要结构，再补充桌椅、灯具、雕塑、地毯、书籍和小型装饰物。各区域需要能够自然连接。",
+      body: "先完成主要建筑结构，再补充家具、雕像、书籍、灯具、地毯和其他室内物件。",
     },
     {
       index: "03",
       title: "材质、灯光与摄影机",
-      body: "通过木材、织物、纸张、金属和石膏等材质丰富层次。最后利用暖色局部照明、环境暗部和摄影机运动完成展示。",
+      body: "通过木材、织物、纸张、金属和石膏材质区分物件，再使用暖色灯光和摄影机运动完成展示。",
     },
   ];
 
@@ -147,15 +147,15 @@ function GoodOmensCameraLighting({ project, onOpen }: { project: ProjectItem; on
   const modules = [
     {
       title: "灯光层次",
-      body: "使用暖色局部光源突出书桌、家具和主要陈设，同时保留较暗背景，让旧书店氛围和空间可读性保持平衡。",
+      body: "使用暖色局部光源突出书桌、家具和主要陈设，同时保留较暗背景，避免模型细节被整体暗部吞掉。",
     },
     {
       title: "摄影机路径",
-      body: "摄影机运动用于展示入口、通道、书架、旋转楼梯和室内陈设之间的关系，并通过镜头切换组织观看顺序。",
+      body: "摄影机路径用于展示入口、通道、书架、旋转楼梯和室内陈设之间的空间关系。",
     },
     {
       title: "最终渲染",
-      body: "渲染结果强调深色木质结构、密集书籍和暖色照明之间的层次，使空间在多角度展示中保持统一气氛。",
+      body: "最终渲染用于检查材质、灯光和场景陈设在多角度展示中是否保持统一。",
     },
   ];
 
@@ -166,7 +166,7 @@ function GoodOmensCameraLighting({ project, onOpen }: { project: ProjectItem; on
           className="goodomens-section-title"
           eyebrow="CAMERA & LIGHTING"
           title="摄影机与灯光呈现"
-          body="完成环境模型后，我使用灯光和摄影机动画重新组织观众观察空间的顺序，使书店能够通过镜头运动被连续理解。"
+          body="完成环境模型后，我使用灯光和摄影机动画组织观看顺序，使书店空间能够被连续展示。"
         />
         <div className="goodomens-presentation-modules">
           {modules.map((module) => (
@@ -214,7 +214,7 @@ export function GoodOmensOutcome() {
         <p>OUTCOME</p>
         <h2>将分散的影视画面转化为可连续观察的三维环境</h2>
         <span>
-          最终场景形成了由入口、立柱、墙面书架、旋转楼梯、主要家具、雕像和室内陈设组成的连续书店环境。摄影机可以在不同区域之间移动，使空间结构和灯光氛围不再局限于单一构图。
+          最终场景包含入口、立柱、墙面书架、旋转楼梯、主要家具、雕像和室内陈设。摄影机可以在不同区域之间移动，用于展示空间结构、视觉焦点和灯光层次。
         </span>
       </div>
       <div className="goodomens-outcome-grid goodomens-outcome-grid-three">

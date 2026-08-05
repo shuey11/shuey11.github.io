@@ -133,17 +133,17 @@ function RiseUpOverview() {
     {
       eyebrow: "BACKGROUND",
       title: "项目背景",
-      body: "面向大学生日常沟通信心练习的 Android 自助应用。项目参考 CBT 与 iCBT 中的渐进式练习、认知重构和自我监测，将其转化为移动端微任务。",
+      body: "RiseUp 面向在课堂发言、与陌生人交流、向讲师提问或参与小组讨论时感到紧张的大学生。项目参考 CBT 与 iCBT 中的渐进练习、认知重构和自我监测，将相关方法转化为可在手机中完成的短任务。",
     },
     {
       eyebrow: "MY ROLE",
       title: "我的角色",
-      body: "个人毕业设计。独立完成调研、交互设计、Flutter 与 Firebase 开发、Unity Avatar 集成、测试和用户验收。",
+      body: "个人毕业设计。独立完成需求调研、问卷分析、功能规划、交互设计、Flutter 开发、Firebase 数据管理、Unity Avatar 集成、功能测试和用户验收测试。",
     },
     {
       eyebrow: "GOAL",
       title: "项目目标",
-      body: "通过个性化任务、互动练习和 Avatar 即时反馈降低练习门槛，使用户能够以较小步骤练习不同沟通场景。",
+      body: "通过个性化微任务、互动练习和 Avatar 即时反馈降低开始练习的门槛。系统根据用户选择的场景、练习偏好和历史结果调整后续任务难度。",
     },
     {
       eyebrow: "STACK",
@@ -210,19 +210,19 @@ function RiseUpLayout({ project, onOpen }: ProjectCaseStudyProps & { onOpen: Ope
     {
       eyebrow: "PERSONALISED TASKS",
       title: "个性化微任务推荐",
-      body: "系统结合困难场景、偏好时长和历史练习结果调整任务难度。练习受挫时降低等级，连续取得进步时提高推荐等级。",
+      body: "系统结合困难场景、偏好时长和练习前后的信心变化调整任务等级。练习受挫时降低难度，连续取得进步时提高推荐等级。",
       tags: ["7 个沟通场景", "每个场景 5 个等级", "根据练习结果调整", "支持偏好时长"],
     },
     {
       eyebrow: "AVATAR FEEDBACK",
       title: "3D Avatar 即时反馈",
-      body: "Avatar 在推荐、开始、思考、完成和升级等阶段提供动作反馈，并配合成长积分与信心变化展示练习结果。",
+      body: "Avatar 在任务推荐、开始、完成和升级等阶段播放不同动作，并配合成长积分和信心变化展示练习结果。",
       tags: ["推荐动作", "开始反馈", "完成反馈", "升级反馈"],
     },
     {
       eyebrow: "AVATAR CUSTOMISATION",
       title: "Avatar 个性化定制",
-      body: "用户可以选择性别、文化风格、脸型、发型、服装和配饰，创建持续出现在任务与成长页面中的虚拟伙伴。",
+      body: "用户可以选择性别、文化风格、脸型、发型、服装和配饰，创建持续出现在任务和成长页面中的虚拟伙伴。",
       tags: ["性别", "文化风格", "脸型与发型", "服装与配饰"],
     },
   ];
@@ -230,17 +230,17 @@ function RiseUpLayout({ project, onOpen }: ProjectCaseStudyProps & { onOpen: Ope
     {
       eyebrow: "GRADED PRACTICE",
       title: "渐进式情境练习",
-      body: "七类沟通场景按难度分级，让用户从较容易的任务开始，逐步接触更具挑战性的日常情境。",
+      body: "不同沟通场景按难度分级，用于组织从低难度到高难度的短任务。",
     },
     {
       eyebrow: "COGNITIVE RESTRUCTURING",
       title: "认知重构与 Thought Check",
-      body: "Thought Check 用于记录自动化想法、识别常见思维模式，并通过证据问题和平衡想法提示支持自我反思。",
+      body: "Thought Check 用于记录和重新审视自动化想法，并通过证据问题与平衡想法提示支持反思。",
     },
     {
       eyebrow: "SELF-MONITORING",
       title: "练习前后自我监测",
-      body: "用户在练习前后记录紧张度、信心变化和简短反思，这些结果会进入成长记录和后续推荐依据。",
+      body: "练习前后记录的紧张度、信心变化和简短反思会参与成长记录与后续推荐。",
     },
   ];
   const flowSteps = [
@@ -298,8 +298,8 @@ function RiseUpLayout({ project, onOpen }: ProjectCaseStudyProps & { onOpen: Ope
       <section className="case-section riseup-core-experience">
         <SectionTitle
           eyebrow="CORE EXPERIENCE"
-          title="围绕持续练习设计的三项核心体验"
-          body="RiseUp 的核心不只是展示任务，而是解决三个问题：推荐什么、练习过程中如何获得反馈，以及用户如何与自己的虚拟伙伴建立个人连接。"
+          title="围绕任务推荐、即时反馈和个人定制设计核心体验"
+          body="RiseUp 的核心功能围绕任务选择、练习结果记录和 Avatar 反馈展开。三项功能共同决定用户看到什么任务、如何获得反馈，以及 Avatar 如何进入练习流程。"
         />
         <div className="riseup-core-grid">
           {coreCards.map((card) => (
@@ -322,8 +322,8 @@ function RiseUpLayout({ project, onOpen }: ProjectCaseStudyProps & { onOpen: Ope
       <section className="case-section riseup-cbt-foundation">
         <SectionTitle
           eyebrow="DESIGN FOUNDATION"
-          title="以 CBT 原则组织练习，而不是随机生成任务"
-          body="项目参考 CBT 与 iCBT 的常见练习方式，只保留与移动端任务直接相关的三个设计依据。"
+          title="将 CBT 练习原则转化为移动端功能"
+          body="渐进练习用于组织不同难度的沟通任务；Thought Check 用于记录和重新审视自动化想法；练习前后自我监测的数据也会参与后续推荐。"
         />
         <div className="riseup-foundation-grid">
           {cbtCards.map((card) => (
@@ -337,7 +337,7 @@ function RiseUpLayout({ project, onOpen }: ProjectCaseStudyProps & { onOpen: Ope
         <aside className="riseup-scope-note">
           <h3>使用范围说明</h3>
           <p>
-            RiseUp 不提供心理疾病诊断、临床评估、危机干预或治疗建议，也不能替代心理咨询师、医生或其他专业服务；它只用于日常沟通练习和自我反思。
+            RiseUp 是非医疗性质的自助练习工具，不提供心理诊断，也不能替代专业心理服务。
           </p>
         </aside>
       </section>
@@ -345,8 +345,8 @@ function RiseUpLayout({ project, onOpen }: ProjectCaseStudyProps & { onOpen: Ope
       <section className="case-section riseup-practice-flow">
         <SectionTitle
           eyebrow="PRACTICE FLOW"
-          title="一次练习，如何影响下一次推荐"
-          body="用户从推荐或任务库进入练习，完成互动任务并记录练习前后的变化。完成记录会参与后续推荐，让下一次练习更符合用户当前的状态。"
+          title="练习结果如何影响下一次推荐"
+          body="用户从推荐或任务库进入练习，完成互动任务并记录紧张度与信心变化。系统保存练习结果，并据此调整下一次推荐等级。"
         />
         <div className="riseup-flow-grid">
           {flowSteps.map((step) => (
@@ -363,13 +363,13 @@ function RiseUpLayout({ project, onOpen }: ProjectCaseStudyProps & { onOpen: Ope
         <aside className="riseup-feedback-loop">
           <h3>练习结果参与下一次推荐</h3>
           <p>
-            如果练习后的紧张度明显升高，或信心低于练习前，系统会降低后续推荐难度；如果用户在同一场景连续取得信心提升，系统会提高该场景的推荐等级。
+            选择推荐或任务库中的任务 → 完成互动练习 → 记录紧张度与信心变化 → 保存练习结果 → 调整下一次推荐等级。
           </p>
           <div aria-label="反馈循环路径">
-            <span>个性化推荐</span>
+            <span>选择任务</span>
             <span>互动练习</span>
-            <span>完成与记录</span>
-            <span>调整下一次推荐</span>
+            <span>保存结果</span>
+            <span>调整推荐等级</span>
           </div>
         </aside>
       </section>
@@ -485,11 +485,11 @@ function TravelLayout({ project, onOpen }: ProjectCaseStudyProps & { onOpen: Ope
 }
 
 function HotelLayout({ project, onOpen }: ProjectCaseStudyProps & { onOpen: OpenImage }) {
-  const services = mediaByFile(project, "booking-services.png");
+  const services = mediaByFile(project, "booking-services.jpg");
   const room = mediaByFile(project, "room-details.png");
-  const management = mediaByFile(project, "booking-management.png");
+  const management = mediaByFile(project, "booking-management.jpg");
   const floor = mediaByFile(project, "floor-map.png");
-  const role = mediaByFile(project, "role-sync.png");
+  const role = mediaByFile(project, "role-sync.jpg");
 
   return (
     <>
@@ -605,9 +605,9 @@ function RiseUpOutcome() {
     <section className="case-outcome-redesign riseup-outcome">
       <div>
         <p>OUTCOME</p>
-        <h2>把抽象的信心练习，转化为可以持续记录的成长过程</h2>
+        <h2>将沟通练习组织为可记录、可调整的移动流程</h2>
         <span>
-          RiseUp 最终完成了个性化任务推荐、互动练习、练习记录和 3D Avatar 反馈。用户可以通过较小任务逐步练习不同沟通场景。
+          最终应用实现了任务推荐、互动练习、练习记录、Thought Check、Avatar 定制与动作反馈。17 项功能测试全部通过，10 名目标用户参与 UAT，平均评分为 4.92 / 5。
         </span>
       </div>
       <dl>
@@ -621,7 +621,7 @@ function RiseUpOutcome() {
         </div>
         <div>
           <dt>测试结果</dt>
-          <dd>17 项功能测试全部通过；10 名目标用户参与 UAT，平均评分为 4.92 / 5。反馈集中在功能引导、Thought Check 示例和更多场景选项。</dd>
+          <dd>UAT 反馈主要集中在功能引导、Thought Check 示例，以及扩展更多场景、语言和 Avatar 选项。</dd>
         </div>
         <div>
           <dt>后续方向</dt>

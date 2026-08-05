@@ -13,17 +13,17 @@ export function TravelBoardOverview() {
         {
           eyebrow: "BACKGROUND",
           title: "项目背景",
-          body: "Travel Board Builder 是一款可配置的城市旅行棋应用。用户可以在开始游戏前编辑棋盘格、地点、旅行事件、玩家名称和棋子外观，再使用保存后的配置开始 1-4 人回合制游戏。",
+          body: "Travel Board Builder 是一款可配置的城市旅行棋应用。用户可以在开始游戏前设置玩家、编辑 32 个棋盘格，并配置地点、旅行事件和消费内容。",
         },
         {
           eyebrow: "MY ROLE",
           title: "我的角色",
-          body: "个人 Flutter 项目。独立完成功能规划、游戏规则设计、棋盘数据结构、界面设计、棋盘编辑器、回合状态管理、地点与事件逻辑、本地 JSON 存档、旅行日志以及 Web 部署。",
+          body: "个人 Flutter 项目。独立完成功能规划、棋盘数据结构、界面设计、配置编辑器、回合管理、地点与事件逻辑、本地 JSON 存档、旅行日志和 Web 部署。",
         },
         {
           eyebrow: "GOAL",
           title: "项目目标",
-          body: "在提供足够编辑自由度的同时，保证棋盘结构、价格配置、玩家状态和回合流程保持一致。用户修改后的内容需要能够正确进入游戏，并在保存和重新读取后保持完整。",
+          body: "在提供编辑自由度的同时，保证棋盘路线、玩家状态、地点价格和回合逻辑保持一致，并确保保存后的配置和游戏进度可以正确恢复。",
         },
         {
           eyebrow: "STACK",
@@ -60,14 +60,14 @@ export function TravelBoardLayout({ project, onOpen }: { project: ProjectItem; o
               ? [{
                   media: setup,
                   label: "玩家与棋盘设置",
-                  note: "设置玩家人数、玩家名称和棋子图片，并进入棋盘编辑器与旅行事件配置。",
+                  note: "设置玩家人数、名称和棋子图片，并进入棋盘与旅行事件编辑功能。",
                 }]
               : []),
             ...(board
               ? [{
                   media: board,
                   label: "棋盘格内容编辑",
-                  note: "设置格子类型、名称和图片，并编辑普通地点、旅行事件、随机事件和旅行消费等内容。",
+                  note: "设置格子类型、名称、图片、地点信息和事件内容。普通格可以拖动交换，四个角落格保持固定。",
                 }]
               : []),
           ] as Array<{ media: ProjectMedia; label?: string; note?: string }>}
@@ -77,26 +77,26 @@ export function TravelBoardLayout({ project, onOpen }: { project: ProjectItem; o
       <section className="case-section travel-data-section">
         <CaseSectionTitle
           eyebrow="GAME DATA STRUCTURE"
-          title="配置数据、对局状态与旅行记录分层管理"
-          body="棋盘配置、当前对局和旅行记录被分开维护。用户既可以重复使用一套自定义棋盘，也可以保存不同游戏进度，并把地点照片和资产变化记录到对应对局中。"
+          title="配置数据、对局状态和旅行记录分别保存"
+          body="棋盘配置用于创建新对局，对局状态用于恢复当前游戏，旅行记录用于保存地点照片、玩家资产和日志内容。"
         />
         <div className="travel-data-grid">
           <article>
             <span>01</span>
             <h3>棋盘配置</h3>
-            <p>保存 32 个格子的类型、地点信息、费用、图片和旅行事件，使自定义内容能够在新对局中重复使用。</p>
+            <p>保存棋盘格、地点、价格和旅行事件，用于创建新的对局。</p>
             {location ? <ProjectFigure item={location} onOpen={onOpen} /> : null}
           </article>
           <article>
             <span>02</span>
             <h3>对局状态</h3>
-            <p>记录当前回合、玩家位置、玩家资金、地点解锁状态和事件结果，确保多个玩家按照同一套规则进行游戏。</p>
+            <p>保存当前玩家、回合、位置、资金和地点解锁情况。</p>
             {event ? <ProjectFigure item={event} onOpen={onOpen} /> : null}
           </article>
           <article>
             <span>03</span>
             <h3>存档与旅行日志</h3>
-            <p>通过本地 JSON 保存多个游戏进度，并为不同对局保留玩家资产、地点记录和上传的旅行照片。</p>
+            <p>保存多个游戏存档、玩家资产、地点照片和旅行日志。</p>
             {journal ? <ProjectFigure item={journal} onOpen={onOpen} /> : null}
           </article>
         </div>
@@ -105,16 +105,16 @@ export function TravelBoardLayout({ project, onOpen }: { project: ProjectItem; o
       <section className="case-section travel-play-loop">
         <CaseSectionTitle
           eyebrow="PLAY LOOP"
-          title="从玩家掷骰到地点解锁与对局保存"
-          body="配置进入游戏后才进入回合制对局。地点解锁只在玩家落到地点格后出现，并根据格子配置、价格和当前资金决定后续操作。"
+          title="从掷骰移动到地点解锁与存档"
+          body="地点解锁只会在玩家进入游戏并落到对应地点格后出现，不属于游戏前配置步骤。"
         />
         <div className="travel-loop-layout">
           <ol>
-            <li><strong>01 掷骰与移动</strong> 当前玩家掷骰，并按照结果沿棋盘路线移动。</li>
-            <li><strong>02 触发格子规则</strong> 到达地点、旅行事件或随机事件格后，系统读取该格子的配置内容。</li>
-            <li><strong>03 地点解锁</strong> 只有玩家落到地点格后，才会根据价格和当前资金显示地点解锁与旅行花费功能。</li>
-            <li><strong>04 更新玩家状态</strong> 系统更新玩家位置、资金、已解锁地点和当前回合。</li>
-            <li><strong>05 保存与继续</strong> 用户可以保存当前对局，并从已有存档继续游戏，无需重新配置棋盘。</li>
+            <li>当前玩家掷骰并移动。</li>
+            <li>到达地点或事件格。</li>
+            <li>读取格子配置。</li>
+            <li>更新资金、地点和回合状态。</li>
+            <li>保存或继续游戏。</li>
           </ol>
           <EqualHeightMediaRow
             className="travel-play-media-row"
@@ -135,9 +135,9 @@ export function TravelBoardOutcome() {
     <section className="case-outcome-redesign travel-outcome">
       <div>
         <p>OUTCOME</p>
-        <h2>把棋盘编辑、对局状态和旅行记录连接成一个可保存的游戏流程</h2>
+        <h2>将棋盘编辑和多人游戏状态整合到同一个 Flutter 应用</h2>
         <span>
-          项目最终完成了从游戏前配置到多人回合制游玩的核心流程。用户可以先调整地点、事件和棋盘格内容，再使用本地 JSON 保存不同进度。
+          最终实现 32 格可编辑棋盘、1-4 人回合制游戏、地点与事件触发、多存档读取和旅行日志功能。
         </span>
       </div>
       <dl>
