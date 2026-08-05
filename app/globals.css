@@ -665,6 +665,10 @@ footer h2 {
   font-weight: 550;
 }
 
+.skills h2 {
+  text-wrap: balance;
+}
+
 .about-row {
   margin-top: 68px;
   display: grid;
@@ -1199,7 +1203,9 @@ footer h2 {
   background: transparent;
 }
 
+.media-card[data-project="riseup"] img,
 .media-card[data-project="riseup"] video,
+.media-card[data-project="hotel-booking"] img,
 .media-card[data-project="hotel-booking"] video {
   position: relative;
   inset: auto;
@@ -2168,6 +2174,15 @@ footer h2 { position: relative; z-index: 2; max-width: 1050px; }
     bottom: auto;
     width: min(68vw, 430px);
     justify-self: center;
+    opacity: 1;
+  }
+  .project-art .art-glow {
+    opacity: .4;
+  }
+  .project-art .art-orb {
+    opacity: .65;
+  }
+  .project-art .art-ring {
     opacity: .55;
   }
   .media-card {
@@ -2386,6 +2401,12 @@ footer h2 { position: relative; z-index: 2; max-width: 1050px; }
     inset: 25% 10%;
     border-radius: 18px;
   }
+  .media-card[data-project="riseup"],
+  .media-card[data-project="hotel-booking"] {
+    width: min(68vw, 280px);
+    max-width: 280px;
+    height: auto;
+  }
   .media-portrait {
     top: 50%;
     right: calc(50% + 10px);
@@ -2401,8 +2422,61 @@ footer h2 { position: relative; z-index: 2; max-width: 1050px; }
     transform: translate(50%, -50%) rotate(-2deg);
   }
   .project-stats { gap: 14px; }
-  .ability { grid-template-columns: minmax(0, 13%) minmax(0, 1fr); padding: 25px 0; }
-  .ability p { grid-column: 2; margin-top: 12px; line-height: 1.7; }
+  .skills {
+    min-height: auto;
+    padding-top: 110px;
+    padding-bottom: 100px;
+  }
+  .skills h2 {
+    max-width: 9ch;
+    font-size: clamp(38px, 10.5vw, 46px);
+    line-height: 1.08;
+  }
+  .ability-list {
+    margin-top: 56px;
+  }
+  .ability {
+    min-height: auto;
+    padding: 26px 0;
+    display: grid;
+    grid-template-columns: 42px minmax(0, 1fr);
+    grid-template-areas:
+      "number title"
+      ". body";
+    column-gap: 16px;
+    row-gap: 14px;
+    align-items: start;
+  }
+  .ability:hover {
+    padding: 26px 0;
+    background: transparent;
+  }
+  .ability > span {
+    grid-area: number;
+    padding-top: 5px;
+  }
+  .ability h3 {
+    grid-area: title;
+    min-width: 0;
+    margin: 0;
+  }
+  .ability-body {
+    grid-area: body;
+    width: 100%;
+    min-width: 0;
+    display: grid;
+    gap: 9px;
+  }
+  .ability-body p {
+    width: 100%;
+    margin: 0;
+    line-height: 1.65;
+    word-break: normal;
+    overflow-wrap: break-word;
+  }
+  .ability i {
+    display: none;
+  }
   .footer-liquid { width: 100vw; right: -45vw; opacity: .6; }
   .footer-bottom { align-items: flex-end; flex-wrap: wrap; }
   .footer-bottom div { flex-direction: column; gap: 8px; text-align: right; }

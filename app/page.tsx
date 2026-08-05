@@ -123,22 +123,19 @@ function Arrow() {
 function ProjectPreviewMedia({ project }: { project: ProjectItem }) {
   const wrapRef = useRef<HTMLAnchorElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const [canPlayVideo, setCanPlayVideo] = useState(false);
+  const [canAutoPlayVideo, setCanAutoPlayVideo] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [videoFailed, setVideoFailed] = useState(false);
 
   useEffect(() => {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const smallScreen = window.matchMedia("(max-width: 900px)");
     const update = () =>
-      setCanPlayVideo(Boolean(project.video) && !reducedMotion.matches && !smallScreen.matches);
+      setCanAutoPlayVideo(Boolean(project.video) && !reducedMotion.matches);
 
     update();
     reducedMotion.addEventListener("change", update);
-    smallScreen.addEventListener("change", update);
     return () => {
       reducedMotion.removeEventListener("change", update);
-      smallScreen.removeEventListener("change", update);
     };
   }, [project.video]);
 
@@ -147,8 +144,11 @@ function ProjectPreviewMedia({ project }: { project: ProjectItem }) {
     if (!node) return;
 
     const observer = new IntersectionObserver(
-      ([entry]) => setIsVisible(entry.isIntersecting && entry.intersectionRatio > 0.58),
-      { threshold: [0, 0.35, 0.58, 0.82] },
+      ([entry]) => setIsVisible(entry.isIntersecting && entry.intersectionRatio >= 0.22),
+      {
+        rootMargin: "0px 0px -8% 0px",
+        threshold: [0, 0.2, 0.4, 0.65],
+      },
     );
 
     observer.observe(node);
@@ -157,15 +157,25 @@ function ProjectPreviewMedia({ project }: { project: ProjectItem }) {
 
   useEffect(() => {
     const video = videoRef.current;
-    if (!video || !canPlayVideo || videoFailed) return;
+    if (!video || videoFailed) return;
+
+    video.muted = true;
+    video.defaultMuted = true;
+
+    if (!canAutoPlayVideo) {
+      video.pause();
+      return;
+    }
 
     if (isVisible) {
-      video.play().catch(() => setVideoFailed(true));
+      video.play().catch(() => {
+        // Autoplay can be rejected by browser policy; keep the video poster visible.
+      });
       return;
     }
 
     video.pause();
-  }, [canPlayVideo, isVisible, videoFailed]);
+  }, [canAutoPlayVideo, isVisible, videoFailed]);
 
   const representative = project.previewImage ?? project.gallery[0]?.src ?? project.cover;
 
@@ -179,7 +189,7 @@ function ProjectPreviewMedia({ project }: { project: ProjectItem }) {
       ref={wrapRef}
       aria-label={`打开 ${project.title} 技术详情`}
     >
-      {project.video && canPlayVideo && !videoFailed ? (
+      {project.video && !videoFailed ? (
         <video
           ref={videoRef}
           muted
