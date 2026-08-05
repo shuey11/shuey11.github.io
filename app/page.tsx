@@ -1,81 +1,7 @@
 ﻿"use client";
 
 import { useEffect, useRef, useState } from "react";
-
-const projects = [
-  {
-    id: "riseup",
-    n: "01",
-    eyebrow: "FINAL YEAR PROJECT · ANDROID",
-    title: "RiseUp",
-    line: "让看不见的练习，变成可以被看见的成长。",
-    description:
-      "面向大学生沟通信心练习的 Android 应用，将个性化 iCBT 微任务、互动练习与可定制 3D Avatar 结合。",
-    tech: ["Flutter", "Firebase", "Unity", "Blender"],
-    stats: ["70 个微任务", "17 项测试通过", "UAT 4.92/5"],
-    tone: "violet",
-  },
-  {
-    id: "vr",
-    n: "02",
-    eyebrow: "VIRTUAL REALITY · SOLO PROJECT",
-    title: "UKM Green Campus Rescue VR",
-    line: "在虚拟校园里，让每一次行动改变环境。",
-    description:
-      "基于真实 FTSM 环境重建可探索的 3D 校园，通过抓取、倾斜与空间交互完成环保任务，逐步恢复校园。",
-    tech: ["Unity", "C#", "Blender", "OpenXR"],
-    stats: ["9 个区域", "45 项任务", "完整结局动画"],
-    tone: "green",
-  },
-  {
-    id: "bookshop",
-    n: "03",
-    eyebrow: "3D ENVIRONMENT · ANIMATION",
-    title: "Good Omens Bookshop",
-    line: "从有限的影视画面，重建一个完整的三维空间。",
-    description:
-      "使用 3ds Max 重建 Aziraphale 书店的空间、书架与旋转楼梯，并制作包含角色表演和镜头切换的剧情动画。",
-    tech: ["3ds Max", "Modeling", "Lighting", "Animation"],
-    stats: ["场景复刻", "Fly-through", "角色动画"],
-    tone: "amber",
-  },
-  {
-    id: "hotel",
-    n: "04",
-    eyebrow: "TEAM MOBILE APPLICATION · TEAM LEAD",
-    title: "HotelEase",
-    line: "从寻找房型，到选择一间具体的房间。",
-    description:
-      "面向 Guest、Staff 与 Admin 的多角色酒店系统。我担任组长并负责完整预订链路、地图选房和跨角色房态。",
-    tech: ["Flutter", "Firebase", "Firestore", "Figma"],
-    stats: ["5 人团队", "3 类角色", "25 人测试"],
-    tone: "blue",
-  },
-  {
-    id: "travel",
-    n: "05",
-    eyebrow: "CONFIGURABLE GAME · CROSS-PLATFORM",
-    title: "Travel Board Builder",
-    line: "不是在固定地图上游玩，而是把自己的城市变成棋盘。",
-    description:
-      "可自定义的旅行棋盘应用，支持可视化编辑、拖动交换、事件卡、1–4 人游戏、旅行日记与独立多存档。",
-    tech: ["Flutter", "Dart", "Local JSON", "Web"],
-    stats: ["32 格棋盘", "1–4 人", "多存档恢复"],
-    tone: "coral",
-  },
-  {
-    id: "art",
-    n: "06",
-    eyebrow: "WEB · DATABASE SYSTEM",
-    title: "Drawing Art Supplies",
-    line: "把分散的数据，连接成完整的业务流程。",
-    description:
-      "围绕产品、顾客、员工、订单和订单明细构建的数据库后台，实现 CRUD、多产品订单、金额计算和发票。",
-    tech: ["PHP", "MySQL", "Bootstrap", "DataTables"],
-    stats: ["6 个核心模块", "关系数据库", "发票生成"],
-    tone: "ink",
-  },
-];
+import { ProjectItem, projects } from "./projects/project-data";
 
 const abilities = [
   [
@@ -150,6 +76,94 @@ const contact = {
 
 function Arrow() {
   return <span aria-hidden="true">↗</span>;
+}
+
+function ProjectPreviewMedia({ project }: { project: ProjectItem }) {
+  const wrapRef = useRef<HTMLAnchorElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const [canPlayVideo, setCanPlayVideo] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [videoFailed, setVideoFailed] = useState(false);
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const smallScreen = window.matchMedia("(max-width: 900px)");
+    const update = () =>
+      setCanPlayVideo(Boolean(project.video) && !reducedMotion.matches && !smallScreen.matches);
+
+    update();
+    reducedMotion.addEventListener("change", update);
+    smallScreen.addEventListener("change", update);
+    return () => {
+      reducedMotion.removeEventListener("change", update);
+      smallScreen.removeEventListener("change", update);
+    };
+  }, [project.video]);
+
+  useEffect(() => {
+    const node = wrapRef.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => setIsVisible(entry.isIntersecting && entry.intersectionRatio > 0.58),
+      { threshold: [0, 0.35, 0.58, 0.82] },
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video || !canPlayVideo || videoFailed) return;
+
+    if (isVisible) {
+      video.play().catch(() => setVideoFailed(true));
+      return;
+    }
+
+    video.pause();
+  }, [canPlayVideo, isVisible, videoFailed]);
+
+  const representative = project.previewImage ?? project.gallery[0]?.src ?? project.cover;
+
+  return (
+    <a
+      className={`media-card media-${project.mediaOrientation ?? "landscape"} media-fit-${
+        project.mediaFit ?? "cover"
+      } ${project.video ? "media-video" : "media-image"}`}
+      data-project={project.slug}
+      href={`/projects/${project.slug}/`}
+      ref={wrapRef}
+      aria-label={`打开 ${project.title} 项目概览`}
+    >
+      {project.video && canPlayVideo && !videoFailed ? (
+        <video
+          ref={videoRef}
+          muted
+          loop
+          playsInline
+          preload="metadata"
+          poster={project.cover}
+          onError={() => setVideoFailed(true)}
+        >
+          <source src={project.video} type="video/mp4" />
+        </video>
+      ) : (
+        <img src={project.cover} alt={`${project.title} 项目封面`} loading="lazy" />
+      )}
+      {!project.video ? (
+        <img
+          className="media-hover"
+          src={representative}
+          alt=""
+          aria-hidden="true"
+          loading="lazy"
+        />
+      ) : null}
+      <span className="media-shine" aria-hidden="true" />
+    </a>
+  );
 }
 
 export default function Home() {
@@ -411,43 +425,39 @@ export default function Home() {
       </section>
 
       <section className="projects">
-        {projects.map((project, index) => (
+        {projects.map((project) => (
           <article
             className={`project project-${project.tone}`}
-            id={project.id}
-            key={project.id}
+            id={project.slug}
+            key={project.slug}
           >
             <div className="project-sticky">
               <div className="project-number">{project.n}</div>
               <div className="project-copy">
-                <p className="project-eyebrow">{project.eyebrow}</p>
+                <p className="project-eyebrow">{project.category}</p>
                 <h3>{project.title}</h3>
-                <h4>{project.line}</h4>
-                <p className="project-description">{project.description}</p>
+                <h4>{project.tagline}</h4>
+                <p className="project-description">{project.summary}</p>
                 <div className="tech-list">
-                  {project.tech.map((item) => (
+                  {project.technologies.map((item) => (
                     <span key={item}>{item}</span>
                   ))}
                 </div>
               </div>
-              <div className={`project-art art-${index + 1}`} aria-hidden="true">
+              <div className={`project-art art-${project.tone}`}>
                 <div className="art-glow" />
                 <div className="art-orb" />
-                <div className="art-frame">
-                  <span>{project.n}</span>
-                  <strong>{project.title}</strong>
-                  <small>REAL PROJECT VISUAL</small>
-                </div>
+                <ProjectPreviewMedia project={project} />
                 <div className="art-ring" />
               </div>
               <div className="project-stats">
-                {project.stats.map((stat) => (
+                {project.metrics.map((stat) => (
                   <span key={stat}>{stat}</span>
                 ))}
               </div>
-              <span className="project-link">
+              <a className="project-link" href={`/projects/${project.slug}/`}>
                 项目概览 <Arrow />
-              </span>
+              </a>
             </div>
           </article>
         ))}
