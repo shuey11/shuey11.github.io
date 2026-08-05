@@ -21,7 +21,15 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="zh-CN">
-      <body>{children}</body>
+      <body>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "if(location.hash){document.documentElement.dataset.initialHashScroll='true';document.documentElement.style.scrollBehavior='auto';}",
+          }}
+        />
+        {children}
+      </body>
     </html>
   );
 }

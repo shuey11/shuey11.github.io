@@ -21,6 +21,7 @@ body {
   color: var(--ink);
   font-family: Inter, "PingFang SC", "Microsoft YaHei", Arial, sans-serif;
   overflow-x: hidden;
+  overflow-y: auto;
 }
 
 img,
@@ -32,6 +33,15 @@ svg {
 
 main {
   overflow-x: clip;
+  overflow-y: visible;
+}
+
+#top,
+#about,
+#projects,
+#skills,
+#contact {
+  scroll-margin-top: 100px;
 }
 
 .hero > *,

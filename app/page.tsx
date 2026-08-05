@@ -1,6 +1,6 @@
 ﻿"use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type MouseEvent } from "react";
 import { ProjectItem, projects } from "./projects/project-data";
 
 type Ability = {
@@ -84,6 +84,37 @@ const contact = {
   github: "https://github.com/shuey11",
   resume: "/resume/Ning-Shuyi-Resume.pdf",
 };
+
+const navigableSections = new Set(["top", "about", "projects", "skills", "contact"]);
+
+function scrollToSection(sectionId: string) {
+  const section = document.getElementById(sectionId);
+  if (!section) return;
+
+  const nav = document.querySelector<HTMLElement>(".nav");
+  const offset = (nav?.offsetHeight ?? 58) + 24;
+  const targetTop = section.getBoundingClientRect().top + window.scrollY - offset;
+  const html = document.documentElement;
+  const previousScrollBehavior = html.style.scrollBehavior;
+
+  html.style.scrollBehavior = "auto";
+  window.scrollTo({
+    top: Math.max(0, targetTop),
+    behavior: "auto",
+  });
+  html.style.scrollBehavior = previousScrollBehavior;
+}
+
+function handleSectionNavigation(event: MouseEvent<HTMLAnchorElement>, sectionId: string) {
+  event.preventDefault();
+  scrollToSection(sectionId);
+  window.history.replaceState(
+    null,
+    "",
+    `${window.location.pathname}${window.location.search}#${sectionId}`,
+  );
+  event.currentTarget.blur();
+}
 
 function Arrow() {
   return <span aria-hidden="true">↗</span>;
@@ -195,6 +226,17 @@ export default function Home() {
     return () => window.removeEventListener("scroll", update);
   }, []);
 
+  useLayoutEffect(() => {
+    const initialSection = window.location.hash.slice(1);
+    if (!navigableSections.has(initialSection)) return;
+
+    scrollToSection(initialSection);
+    if (document.documentElement.dataset.initialHashScroll === "true") {
+      document.documentElement.style.scrollBehavior = "";
+      delete document.documentElement.dataset.initialHashScroll;
+    }
+  }, []);
+
   return (
     <main
       onPointerMove={(event) =>
@@ -205,15 +247,28 @@ export default function Home() {
       }
     >
       <nav className={`nav ${scroll > 40 ? "nav-scrolled" : ""}`}>
-        <a className="brand" href="#top" aria-label="返回首页">
+        <a
+          className="brand"
+          href="#top"
+          aria-label="返回首页"
+          onClick={(event) => handleSectionNavigation(event, "top")}
+        >
           <span>宁舒依</span>
           <small>Ning Shuyi</small>
         </a>
         <div className="nav-links">
-          <a href="#about">关于</a>
-          <a href="#projects">项目</a>
-          <a href="#skills">能力</a>
-          <a href="#contact">联系</a>
+          <a href="#about" onClick={(event) => handleSectionNavigation(event, "about")}>
+            关于
+          </a>
+          <a href="#projects" onClick={(event) => handleSectionNavigation(event, "projects")}>
+            项目
+          </a>
+          <a href="#skills" onClick={(event) => handleSectionNavigation(event, "skills")}>
+            能力
+          </a>
+          <a href="#contact" onClick={(event) => handleSectionNavigation(event, "contact")}>
+            联系
+          </a>
         </div>
         <a className="nav-cta" href={contact.resume} rel="noreferrer" target="_blank">
           简历 <Arrow />
@@ -242,7 +297,11 @@ export default function Home() {
             正在寻找软件开发相关实习机会
           </p>
           <div className="hero-actions">
-            <a className="button button-dark" href="#projects">
+            <a
+              className="button button-dark"
+              href="#projects"
+              onClick={(event) => handleSectionNavigation(event, "projects")}
+            >
               查看技术项目 <span>↓</span>
             </a>
             <a className="button button-ghost" href={contact.resume} rel="noreferrer" target="_blank">
@@ -539,7 +598,9 @@ export default function Home() {
             >
               LIVE PROJECT
             </a>
-            <a href="#top">BACK TO TOP ↑</a>
+            <a href="#top" onClick={(event) => handleSectionNavigation(event, "top")}>
+              BACK TO TOP ↑
+            </a>
           </div>
         </div>
       </footer>
