@@ -1194,34 +1194,6 @@ footer h2 {
   object-position: center;
 }
 
-.media-card[data-project="riseup"],
-.media-card[data-project="hotel-booking"] {
-  aspect-ratio: auto;
-  max-height: none;
-  border-radius: 32px;
-  overflow: hidden;
-  background: transparent;
-}
-
-.media-card[data-project="riseup"] img,
-.media-card[data-project="riseup"] video,
-.media-card[data-project="hotel-booking"] img,
-.media-card[data-project="hotel-booking"] video {
-  position: relative;
-  inset: auto;
-  width: 100%;
-  height: auto;
-  max-width: 100%;
-  max-height: none;
-  display: block;
-  border: 0;
-  border-radius: inherit;
-  object-fit: contain;
-  object-position: center;
-  transform: none;
-  background: transparent;
-}
-
 .media-hover {
   opacity: 0;
   transform: scale(1.05);
@@ -2400,12 +2372,6 @@ footer h2 { position: relative; z-index: 2; max-width: 1050px; }
   .media-card {
     inset: 25% 10%;
     border-radius: 18px;
-  }
-  .media-card[data-project="riseup"],
-  .media-card[data-project="hotel-booking"] {
-    width: min(68vw, 280px);
-    max-width: 280px;
-    height: auto;
   }
   .media-portrait {
     top: 50%;
