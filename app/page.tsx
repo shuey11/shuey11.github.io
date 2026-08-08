@@ -294,17 +294,17 @@ export default function Home() {
             <span className="gradient-text">交互媒体开发者</span>
           </h1>
           <p className="hero-intro">
-            我目前就读于 UKM 软件工程（多媒体系统开发）专业，项目经验涵盖移动应用、云端数据、VR 游戏、三维环境和数据库后台。我能够从需求分析、数据结构和用户流程开始，完成界面、功能、测试与最终展示。
+            我目前就读于 UKM 软件工程（多媒体系统开发）专业，项目实践涵盖 Web 前端、移动应用、云端数据、数据库系统、VR 游戏与3D建模。我关注界面呈现与交互体验，也能够从需求分析、数据结构和用户流程出发，完成设计、开发、测试与最终展示。
           </p>
           <div className="hero-tags" aria-label="关键词">
-            {["Flutter / Dart","Firebase / Firestore","Unity / C#","React / TypeScript","PHP / MySQL","3ds Max / Blender"].map(
+            {["HTML / CSS","React / TypeScript","Flutter / Dart","Java","PHP / MySQL","Firebase / Firestore","Unity / C#","3ds Max / Blender"].map(
               (item) => (
                 <span key={item}>{item}</span>
               ),
             )}
           </div>
           <p className="hero-status">
-            正在寻找软件开发相关实习机会
+            正在寻找能够参与真实产品与数字体验开发的实习机会
           </p>
           <div className="hero-actions">
             <a
