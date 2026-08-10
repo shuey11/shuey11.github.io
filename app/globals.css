@@ -3824,7 +3824,9 @@ footer h2 { position: relative; z-index: 2; max-width: 1050px; }
   align-items: center;
 }
 
-.case-layout-mobile-journey .riseup-hero-media {
+.case-layout-mobile-journey .riseup-hero-media,
+.case-layout-board-collage .travel-hero-media,
+.case-layout-service-flow .hotel-hero-media {
   width: fit-content;
   max-width: min(430px, 100%);
   max-height: none;
@@ -3837,7 +3839,11 @@ footer h2 { position: relative; z-index: 2; max-width: 1050px; }
 }
 
 .case-layout-mobile-journey .riseup-hero-media video,
-.case-layout-mobile-journey .riseup-hero-media img {
+.case-layout-mobile-journey .riseup-hero-media img,
+.case-layout-board-collage .travel-hero-media video,
+.case-layout-board-collage .travel-hero-media img,
+.case-layout-service-flow .hotel-hero-media video,
+.case-layout-service-flow .hotel-hero-media img {
   display: block;
   width: auto;
   height: auto;
@@ -4199,7 +4205,11 @@ footer h2 { position: relative; z-index: 2; max-width: 1050px; }
   }
 
   .case-layout-mobile-journey .riseup-hero-media video,
-  .case-layout-mobile-journey .riseup-hero-media img {
+  .case-layout-mobile-journey .riseup-hero-media img,
+  .case-layout-board-collage .travel-hero-media video,
+  .case-layout-board-collage .travel-hero-media img,
+  .case-layout-service-flow .hotel-hero-media video,
+  .case-layout-service-flow .hotel-hero-media img {
     max-width: 100%;
     max-height: none;
   }
@@ -4948,8 +4958,6 @@ footer h2 { position: relative; z-index: 2; max-width: 1050px; }
 }
 
 .case-layout-spatial-vr .ftsm-hero-media,
-.case-layout-board-collage .travel-hero-media,
-.case-layout-service-flow .hotel-hero-media,
 .case-layout-dashboard-editorial .drawing-hero-media {
   width: fit-content;
   max-width: 100%;
@@ -4961,22 +4969,11 @@ footer h2 { position: relative; z-index: 2; max-width: 1050px; }
 
 .case-layout-spatial-vr .ftsm-hero-media video,
 .case-layout-spatial-vr .ftsm-hero-media img,
-.case-layout-service-flow .hotel-hero-media video,
-.case-layout-service-flow .hotel-hero-media img,
 .case-layout-dashboard-editorial .drawing-hero-media img {
   width: auto;
   height: auto;
   max-width: min(720px, 100%);
   max-height: min(68vh, 640px);
-  object-fit: contain;
-  background: transparent;
-}
-
-.case-layout-board-collage .travel-hero-media img {
-  width: auto;
-  height: auto;
-  max-width: min(360px, 100%);
-  max-height: min(70vh, 680px);
   object-fit: contain;
   background: transparent;
 }

@@ -667,9 +667,10 @@ export default function Home() {
           我正在寻找软件开发、前端开发、移动应用相关的实习和项目机会。可以通过邮箱、GitHub 或简历进一步了解我的项目经验。
         </p>
         <div className="contact-grid" aria-label="联系方式">
-          <span className="contact-link">
+          <a className="contact-link" href={`mailto:${contact.email}`}>
             <small>Email</small>
-          </span>
+            {contact.email} <Arrow />
+          </a>
           <a className="contact-link" href={contact.github} rel="noreferrer" target="_blank">
             <small>GitHub</small>
             查看 GitHub <Arrow />
