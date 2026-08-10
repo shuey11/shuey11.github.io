@@ -11,6 +11,15 @@ type Ability = {
   description?: string;
 };
 
+type ActivityRecord = {
+  title: string;
+  caption: string;
+  englishCaption: string;
+  image: string;
+  alt: string;
+  fit: "cover" | "contain";
+};
+
 const abilities = [
   {
     title: "移动应用与前端",
@@ -78,6 +87,33 @@ const activities = [
     description: "参与Young Teachers 8.1学生导师计划，协助开展学习交流与指导活动。",
   },
 ];
+
+const activityRecords = [
+  {
+    title: "Dean’s List Award ×4",
+    caption: "Dean’s List 获奖记录",
+    englishCaption: "Dean’s List Recognition",
+    image: "/media/achievements/deans-list.jpg",
+    alt: "宁舒依的Dean’s List获奖记录",
+    fit: "contain",
+  },
+  {
+    title: "DJI RoboMaster Challenge 2026",
+    caption: "RoboMaster Challenge 2026 参赛记录",
+    englishCaption: "Competition Record",
+    image: "/media/achievements/robomaster-2026.jpg",
+    alt: "DJI RoboMaster Challenge 2026参赛活动照片",
+    fit: "cover",
+  },
+  {
+    title: "Young Teachers 8.1",
+    caption: "Young Teachers 8.1 学生导师活动记录",
+    englishCaption: "Student Mentor Record",
+    image: "/media/achievements/young-teachers-mentor.jpg",
+    alt: "Young Teachers 8.1学生导师活动照片",
+    fit: "cover",
+  },
+] satisfies ActivityRecord[];
 
 const contact = {
   email: "nshuey@163.com",
@@ -218,9 +254,46 @@ function ProjectPreviewMedia({ project }: { project: ProjectItem }) {
   );
 }
 
+function SelectedRecords({
+  records,
+  onOpen,
+}: {
+  records: ActivityRecord[];
+  onOpen: (record: ActivityRecord) => void;
+}) {
+  return (
+    <div className="selected-records" aria-labelledby="selected-records-title">
+      <div className="selected-records-heading">
+        <p className="section-index">SELECTED RECORDS</p>
+        <h3 id="selected-records-title">相关记录</h3>
+      </div>
+      <div className="records-grid">
+        {records.map((record) => (
+          <article className="record-card" key={record.title}>
+            <button
+              type="button"
+              className={`record-media record-fit-${record.fit}`}
+              onClick={() => onOpen(record)}
+              aria-label={`放大查看${record.title}`}
+            >
+              <img src={record.image} alt={record.alt} loading="lazy" />
+            </button>
+            <div className="record-copy">
+              <h4>{record.title}</h4>
+              <p>{record.caption}</p>
+              <small>{record.englishCaption}</small>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   const [scroll, setScroll] = useState(0);
   const [pointer, setPointer] = useState({ x: 0, y: 0 });
+  const [activeRecord, setActiveRecord] = useState<ActivityRecord | null>(null);
   const frame = useRef<number | null>(null);
 
   useEffect(() => {
@@ -246,6 +319,19 @@ export default function Home() {
       delete document.documentElement.dataset.initialHashScroll;
     }
   }, []);
+
+  useEffect(() => {
+    if (!activeRecord) return;
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setActiveRecord(null);
+      }
+    };
+
+    window.addEventListener("keydown", closeOnEscape);
+    return () => window.removeEventListener("keydown", closeOnEscape);
+  }, [activeRecord]);
 
   return (
     <main
@@ -294,7 +380,7 @@ export default function Home() {
             <span className="gradient-text">交互媒体开发者</span>
           </h1>
           <p className="hero-intro">
-            我目前就读于 UKM 软件工程（多媒体系统开发）专业，项目实践涵盖 Web 前端、移动应用、云端数据、数据库系统、VR 游戏与3D建模。我关注界面呈现与交互体验，也能够从需求分析、数据结构和用户流程出发，完成设计、开发、测试与最终展示。
+            我目前就读于 马来西亚国立大学UKM - 软件工程专业，项目实践涵盖 Web 前端、移动应用、数据库系统、VR 游戏与3D建模。我关注界面呈现与交互体验，也能够从需求分析、数据结构和用户流程出发，完成设计、开发、测试与最终展示。
           </p>
           <div className="hero-tags" aria-label="关键词">
             {["HTML / CSS","React / TypeScript","Flutter / Dart","Java","PHP / MySQL","Firebase / Firestore","Unity / C#","3ds Max / Blender"].map(
@@ -421,7 +507,11 @@ export default function Home() {
                 <dd>
                   Bachelor of Software Engineering
                   <br />
-                  Multimedia Systems Development
+                  软件工程学士
+                  <br />
+                  (Multimedia Systems Development)
+                  <br />
+                  (多媒体系统开发)
                 </dd>
               </div>
               <div>
@@ -431,11 +521,7 @@ export default function Home() {
               <div className="education-stats">
                 <span>
                   <b>3.70</b>
-                  <small>/ 4.00 CGPA</small>
-                </span>
-                <span>
-                  <b>×4</b>
-                  <small>Dean&apos;s List</small>
+                  <small>/ 4.00 CGPA总绩点</small>
                 </span>
               </div>
             </dl>
@@ -488,6 +574,7 @@ export default function Home() {
               </article>
             ))}
           </div>
+          <SelectedRecords records={activityRecords} onOpen={setActiveRecord} />
         </div>
       </section>
 
@@ -577,12 +664,11 @@ export default function Home() {
         <p className="section-index">10 / CONTACT</p>
         <h2>一起讨论软件、移动应用与交互项目</h2>
         <p className="footer-copy">
-          我正在寻找软件开发、前端开发、移动应用、游戏与交互媒体相关的实习和项目机会。可以通过邮箱、GitHub 或简历进一步了解我的项目经验。
+          我正在寻找软件开发、前端开发、移动应用相关的实习和项目机会。可以通过邮箱、GitHub 或简历进一步了解我的项目经验。
         </p>
         <div className="contact-grid" aria-label="联系方式">
           <span className="contact-link">
             <small>Email</small>
-            {contact.email === "待填写" ? "邮箱待补充" : contact.email}
           </span>
           <a className="contact-link" href={contact.github} rel="noreferrer" target="_blank">
             <small>GitHub</small>
@@ -614,6 +700,25 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      {activeRecord ? (
+        <div
+          className="lightbox"
+          role="dialog"
+          aria-modal="true"
+          aria-label={activeRecord.alt}
+          onClick={() => setActiveRecord(null)}
+        >
+          <button type="button" onClick={() => setActiveRecord(null)} autoFocus>
+            关闭
+          </button>
+          <img src={activeRecord.image} alt={activeRecord.alt} />
+          <p>
+            {activeRecord.caption}
+            <span>{activeRecord.englishCaption}</span>
+          </p>
+        </div>
+      ) : null}
     </main>
   );
 }
