@@ -11,24 +11,24 @@ export function HotelEaseOverview() {
       className="hotel-overview-cards"
       cards={[
         {
-          eyebrow: "BACKGROUND",
-          title: "项目背景",
-          body: "HotelEase 是一套面向客人、员工和管理员的酒店移动应用。系统覆盖房间浏览、预订、地图选房、服务申请、员工任务处理和房态管理。",
+          eyebrow: "PROJECT",
+          title: "项目简介",
+          body: "面向酒店预订与住店服务开发的多角色移动应用，包含 Guest、Staff 和 Admin，覆盖房型浏览、地图选房、预订、消息通知及酒店内部服务管理。",
         },
         {
-          eyebrow: "MY ROLE",
-          title: "我的角色",
-          body: "五人小组项目，担任组长。负责需求拆解、功能分工、进度协调、界面与数据字段统一、版本整合、核心流程联调和测试，并参与 Flutter 与 Firebase 功能实现。",
+          eyebrow: "MY WORK",
+          title: "我的工作",
+          body: "五人小组项目，担任组长。负责房间预订、地图选房、消息通知、个人偏好及房型推荐模块的页面、交互和业务流程开发；同时负责需求拆解、任务协调、数据字段统一、版本整合和三端核心流程联调。",
         },
         {
-          eyebrow: "GOAL",
-          title: "项目目标",
-          body: "将客人的预订和服务申请连接到酒店内部处理流程，使房间、预订和任务状态可以在不同角色页面中保持一致，同时明确不同角色的操作范围。",
+          eyebrow: "IMPLEMENTATION",
+          title: "技术实现",
+          body: "使用 Flutter/Dart 开发移动端页面和操作流程，通过 Firebase Authentication 完成用户认证、Cloud Firestore 管理用户、房间和预订数据；串联浏览房型 → 地图选房 → 提交预订 → 查看预订 → 接收通知流程，并连接 Guest、Staff、Admin 三种角色的数据状态。",
         },
         {
           eyebrow: "STACK",
           title: "技术栈",
-          body: "Flutter · Firebase Authentication · Cloud Firestore · Figma",
+          body: "Flutter · Dart · Firebase Authentication · Cloud Firestore · Figma",
         },
       ]}
     />
@@ -47,36 +47,58 @@ export function HotelEaseLayout({ project, onOpen }: { project: ProjectItem; onO
       <section className="case-section hotel-role-section">
         <CaseSectionTitle
           eyebrow="ROLE SYSTEM"
-          title="Guest、Staff 和 Admin 围绕同一套酒店数据协作"
-          body="一个角色更新数据后，其他相关页面会从 Firestore 读取更新后的状态。三种角色共享房间、预订和服务任务数据，但操作范围不同。"
+          title="Guest、Staff 和 Admin 读取并更新同一套酒店数据"
+          body="Guest 提交预订后，Firestore 保存房间、日期、用户和预订状态；Staff / Admin 页面读取相关预订数据并显示最新状态。不同角色使用同一套数据，但操作范围不同。"
         />
         <EqualHeightMediaRow
           className="hotel-role-row"
           onOpen={onOpen}
           items={[
-            ...(services ? [{ media: services, label: "GUEST / 客人", note: "浏览房间、选择日期、查看房间位置、提交预订，并申请洗衣、清洁和餐饮等酒店服务。" }] : []),
-            ...(booking ? [{ media: booking, label: "STAFF / 员工", note: "读取分配到的服务任务，查看任务信息，并更新处理状态。" }] : []),
-            ...(role ? [{ media: role, label: "ADMIN / 管理员", note: "维护房间和预订信息，查看房态，并检查酒店服务的执行情况。" }] : []),
+            ...(services
+              ? [{
+                  media: services,
+                  label: "GUEST / 客人",
+                  note: "浏览房型与服务入口，选择日期、查看房间位置、提交预订，并接收相关通知。",
+                }]
+              : []),
+            ...(booking
+              ? [{
+                  media: booking,
+                  label: "STAFF / 员工",
+                  note: "读取分配到的服务或预订数据，查看任务信息，并更新处理状态。",
+                }]
+              : []),
+            ...(role
+              ? [{
+                  media: role,
+                  label: "ADMIN / 管理员",
+                  note: "查看房间、预订和服务状态，检查酒店管理流程中的数据变化。",
+                }]
+              : []),
           ] as Array<{ media: ProjectMedia; label?: string; note?: string }>}
         />
       </section>
 
       <section className="case-section hotel-booking-section">
-        <CaseSectionTitle eyebrow="BOOKING FLOW" title="从选择日期到查看预订状态" />
+        <CaseSectionTitle
+          eyebrow="BOOKING FLOW"
+          title="从房型浏览到地图选房和预订提交"
+          body="Guest 先浏览房型和房间详情，再通过楼层地图选择具体房间；提交后，Cloud Firestore 保存用户、房间、日期和预订状态，后续页面读取最新预订记录。"
+        />
         <div className="hotel-booking-layout">
           <ol>
-            <li>选择入住与退房日期。</li>
-            <li>浏览房型。</li>
-            <li>查看房间详情与位置。</li>
-            <li>提交预订。</li>
-            <li>查看预订状态。</li>
+            <li>浏览房型与酒店服务。</li>
+            <li>查看房间详情、价格和可用信息。</li>
+            <li>在楼层地图中选择具体房间。</li>
+            <li>提交预订并写入 Firestore。</li>
+            <li>查看预订状态并接收通知。</li>
           </ol>
           <EqualHeightMediaRow
             className="hotel-booking-row"
             onOpen={onOpen}
             items={[
-              ...(room ? [{ media: room, label: "房间详情" }] : []),
-              ...(floor ? [{ media: floor, label: "地图选房" }] : []),
+              ...(room ? [{ media: room }] : []),
+              ...(floor ? [{ media: floor }] : []),
             ] as Array<{ media: ProjectMedia; label?: string }>}
           />
         </div>
@@ -85,8 +107,8 @@ export function HotelEaseLayout({ project, onOpen }: { project: ProjectItem; onO
       <section className="case-section hotel-shared-state">
         <CaseSectionTitle
           eyebrow="SHARED STATE"
-          title="房间、预订与服务任务在不同角色之间同步"
-          body="客人提交预订后，系统保存房间、日期、客人和预订状态；客人申请酒店服务后，系统生成对应任务供员工处理；员工或管理员更新状态后，相关页面读取新的 Firestore 数据。"
+          title="预订、通知和角色页面之间的数据流转"
+          body="Guest 的预订数据写入 Firestore 后，Staff / Admin 页面读取对应房间、日期、用户和状态；当状态被处理或更新后，Guest 侧页面可继续读取最新记录并展示通知。"
         />
       </section>
     </div>
@@ -98,13 +120,15 @@ export function HotelEaseOutcome() {
     <section className="case-outcome-redesign hotel-outcome">
       <div>
         <p>OUTCOME</p>
-        <h2>把客人操作和酒店内部管理连接到同一套移动系统</h2>
-        <span>最终完成 Guest、Staff 和 Admin 三种角色，以及房间浏览、地图选房、预订、酒店服务、员工任务和管理功能。项目由五人团队完成，并通过 25 名用户测试收集反馈。</span>
+        <h2>把客人预订操作和酒店内部管理连接到同一套移动系统</h2>
+        <span>
+          最终完成 Guest、Staff 和 Admin 三种角色，以及房型浏览、地图选房、预订、消息通知、酒店服务、员工任务和管理功能。项目由五人团队完成，并通过 25 名用户测试收集反馈。
+        </span>
       </div>
       <dl>
         <div>
           <dt>我的职责</dt>
-          <dd>作为组长负责需求拆解、任务协调、数据结构统一、版本整合、核心流程联调和测试，并参与应用功能实现。</dd>
+          <dd>负责房间预订、地图选房、消息通知、个人偏好和房型推荐模块，并作为组长完成需求拆解、数据字段统一、版本整合和三端流程联调。</dd>
         </div>
         <div>
           <dt>系统成果</dt>
@@ -113,10 +137,6 @@ export function HotelEaseOutcome() {
         <div>
           <dt>测试结果</dt>
           <dd>项目由五人团队完成，并通过 25 名用户的测试收集可用性反馈。</dd>
-        </div>
-        <div>
-          <dt>后续方向</dt>
-          <dd>继续优化角色权限、异常状态处理、通知机制和管理端数据概览。</dd>
         </div>
       </dl>
     </section>

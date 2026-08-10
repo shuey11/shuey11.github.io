@@ -603,11 +603,11 @@ export default function Home() {
                 <h4>{project.tagline}</h4>
                 <p className="project-description">{project.summary}</p>
                 <p className="project-description">
-                  <strong>我的角色：</strong>{project.role}
+                  <strong>我的工作：</strong>{project.role}
                 </p>
                 {project.solution ? (
                   <p className="project-description">
-                    <strong>技术重点：</strong>{project.solution}
+                    <strong>主要实现：</strong>{project.solution}
                   </p>
                 ) : null}
                 <div className="tech-list">

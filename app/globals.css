@@ -1325,6 +1325,38 @@ footer h2 {
   object-position: center;
 }
 
+.media-card.media-portrait[data-project="riseup"],
+.media-card.media-portrait[data-project="travel-board-builder"],
+.media-card.media-portrait[data-project="hotel-booking"] {
+  right: calc(16% + 82px);
+  width: clamp(215px, 16.1vw, 295px);
+  aspect-ratio: 9 / 19.2;
+  border-color: rgba(255,255,255,.22);
+  border-radius: 28px;
+  background:
+    linear-gradient(145deg, rgba(255,255,255,.12), rgba(255,255,255,.035)),
+    rgba(8, 10, 14, .44);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.22),
+    0 28px 62px rgba(0,0,0,.26);
+}
+
+.media-card.media-portrait.media-fit-contain[data-project="riseup"] img,
+.media-card.media-portrait.media-fit-contain[data-project="riseup"] video,
+.media-card.media-portrait.media-fit-contain[data-project="travel-board-builder"] img,
+.media-card.media-portrait.media-fit-contain[data-project="travel-board-builder"] video,
+.media-card.media-portrait.media-fit-contain[data-project="hotel-booking"] img,
+.media-card.media-portrait.media-fit-contain[data-project="hotel-booking"] video {
+  left: 50%;
+  right: auto;
+  width: 108%;
+  max-width: none;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: translateX(-50%);
+}
+
 .media-hover {
   opacity: 0;
   transform: scale(1.05);
@@ -2335,6 +2367,13 @@ footer h2 { position: relative; z-index: 2; max-width: 1050px; }
     border-radius: 30px;
     transform: translateY(-50%) rotate(-3deg);
   }
+  .media-card.media-portrait[data-project="riseup"],
+  .media-card.media-portrait[data-project="travel-board-builder"],
+  .media-card.media-portrait[data-project="hotel-booking"] {
+    right: calc(12% + 24px);
+    width: clamp(197px, 28.7vw, 251px);
+    border-radius: 27px;
+  }
   .media-portrait:hover {
     transform: translateY(-50%) rotate(-3deg);
   }
@@ -2561,6 +2600,13 @@ footer h2 { position: relative; z-index: 2; max-width: 1050px; }
     max-height: 52vh;
     border-radius: 28px;
     transform: translate(50%, -50%) rotate(-2deg);
+  }
+  .media-card.media-portrait[data-project="riseup"],
+  .media-card.media-portrait[data-project="travel-board-builder"],
+  .media-card.media-portrait[data-project="hotel-booking"] {
+    right: 50%;
+    width: min(61vw, 251px);
+    border-radius: 26px;
   }
   .media-portrait:hover {
     transform: translate(50%, -50%) rotate(-2deg);
@@ -4977,20 +5023,27 @@ footer h2 { position: relative; z-index: 2; max-width: 1050px; }
 
 .ftsm-blueprint-layout {
   display: grid;
-  grid-template-columns: minmax(0, .62fr) minmax(300px, .38fr);
-  gap: clamp(22px, 4vw, 44px);
-  align-items: stretch;
+  grid-template-columns: minmax(0, .54fr) minmax(300px, .38fr);
+  gap: clamp(22px, 3.4vw, 38px);
+  align-items: start;
 }
 
 .ftsm-blueprint-layout > .project-media {
-  max-width: 100%;
-  justify-self: center;
+  width: 100%;
+  max-width: min(100%, 680px);
+  justify-self: end;
 }
 
-.ftsm-blueprint-layout > .project-media button,
+.ftsm-blueprint-layout > .project-media button {
+  width: 100%;
+  justify-content: center;
+}
+
 .ftsm-blueprint-layout > .project-media img {
   width: 100%;
   height: auto;
+  max-height: clamp(420px, 46vw, 540px);
+  object-fit: contain;
 }
 
 .ftsm-blueprint-notes,
@@ -4998,6 +5051,11 @@ footer h2 { position: relative; z-index: 2; max-width: 1050px; }
 .drawing-db-modules {
   display: grid;
   gap: 16px;
+}
+
+.ftsm-blueprint-notes {
+  align-content: start;
+  align-self: start;
 }
 
 .ftsm-blueprint-notes article,
@@ -5035,12 +5093,22 @@ footer h2 { position: relative; z-index: 2; max-width: 1050px; }
 }
 
 .ftsm-result-row {
-  --media-row-height: clamp(280px, 28vw, 460px);
+  --media-row-height: 360px;
 }
 
-.ftsm-result-row .project-media:nth-child(1) { flex: 1.25 1 0; }
-.ftsm-result-row .project-media:nth-child(2) { flex: 1 1 0; }
-.ftsm-result-row .project-media:nth-child(3) { flex: .95 1 0; }
+.ftsm-result-row .project-media {
+  flex: 1 1 0;
+}
+
+.ftsm-result-row .project-media button {
+  height: var(--media-row-height);
+}
+
+.ftsm-result-row .project-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
 
 .ftsm-gameplay-grid {
   display: grid;
@@ -5093,17 +5161,61 @@ footer h2 { position: relative; z-index: 2; max-width: 1050px; }
   color: var(--case-text);
 }
 
-.travel-config-row,
 .hotel-role-row,
 .drawing-business-row {
   --media-row-height: clamp(330px, 34vw, 560px);
 }
 
-.travel-config-row .project-media:nth-child(1) { flex: 1 1 0; }
-.travel-config-row .project-media:nth-child(2) { flex: 1.06 1 0; }
+.travel-system-grid {
+  display: grid;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+  gap: clamp(18px, 2.6vw, 30px);
+  align-items: start;
+}
+
+.travel-system-card {
+  grid-column: span 2;
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+}
+
+.travel-system-card:nth-child(4) {
+  grid-column: 2 / span 2;
+}
+
+.travel-system-card span {
+  color: var(--case-accent);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.travel-system-card h3 {
+  margin: 8px 0 0;
+  color: var(--case-text);
+  font-size: clamp(20px, 2vw, 30px);
+}
+
+.travel-system-card .project-media {
+  margin-top: 4px;
+}
+
+.travel-system-card .project-media button {
+  width: 100%;
+  height: clamp(420px, 40vw, 560px);
+  align-items: center;
+  justify-content: center;
+}
+
+.travel-system-card .project-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
 
 .travel-data-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: start;
 }
 
 .travel-data-grid .project-media {
@@ -5214,6 +5326,27 @@ footer h2 { position: relative; z-index: 2; max-width: 1050px; }
     justify-self: stretch;
   }
 
+  .ftsm-blueprint-layout > .project-media img {
+    max-height: none;
+  }
+
+  .ftsm-result-row {
+    --media-row-height: 300px;
+  }
+
+  .travel-system-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .travel-system-card,
+  .travel-system-card:nth-child(4) {
+    grid-column: auto;
+  }
+
+  .travel-system-card .project-media button {
+    height: 460px;
+  }
+
   .media-equal-row {
     flex-wrap: wrap;
   }
@@ -5236,6 +5369,7 @@ footer h2 { position: relative; z-index: 2; max-width: 1050px; }
   .hotel-overview-cards,
   .drawing-overview-cards,
   .ftsm-gameplay-grid,
+  .travel-system-grid,
   .travel-data-grid,
   .drawing-db-modules,
   .goodomens-process-grid-three,
@@ -5254,6 +5388,10 @@ footer h2 { position: relative; z-index: 2; max-width: 1050px; }
 
   .media-equal-row .project-media button {
     width: 100%;
+    height: auto;
+  }
+
+  .travel-system-card .project-media button {
     height: auto;
   }
 

@@ -11,19 +11,19 @@ export function FtsmVrOverview() {
       className="ftsm-overview-cards"
       cards={[
         {
-          eyebrow: "BACKGROUND",
-          title: "项目背景",
-          body: "游戏以 UKM FTSM 的真实校园环境为原型。玩家需要在不同建筑、走廊和室外区域中寻找垃圾、闲置电器和枯萎植物等环境问题。",
+          eyebrow: "PROJECT",
+          title: "项目简介",
+          body: "以 UKM FTSM 真实校园为原型重建的 VR 环保游戏，玩家探索不同建筑和室外区域，通过可操作任务逐步恢复校园环境。",
         },
         {
-          eyebrow: "MY ROLE",
-          title: "我的角色",
-          body: "个人 VR 项目。独立完成校园资料整理、空间规划、Unity 场景搭建、环保任务设计、VR 移动、抓取交互、任务进度、地图显示、碰撞处理和最终结局动画。",
+          eyebrow: "MY WORK",
+          title: "我的工作",
+          body: "个人 VR 项目。独立完成校园资料整理、空间规划、Unity 场景搭建、环保任务设计、VR 移动、抓取交互、碰撞处理、任务状态、地图进度和最终结局动画。",
         },
         {
-          eyebrow: "GOAL",
-          title: "项目目标",
-          body: "在保留真实校园主要空间关系和建筑识别度的基础上，将环保知识转化为可操作的 VR 任务，并建立从单项任务到区域完成的进度逻辑。",
+          eyebrow: "IMPLEMENTATION",
+          title: "技术实现",
+          body: "使用 Unity、C# 和 OpenXR 构建 VR 场景与交互，将 Block A–H 和 Car Parking 划分为 9 个任务区域，每个区域配置 5 项环保任务；完成区域后更新地图进度，9 个区域全部完成后触发古树复苏动画。",
         },
         {
           eyebrow: "STACK",
@@ -47,14 +47,13 @@ export function FtsmVrLayout({ project, onOpen }: { project: ProjectItem; onOpen
         <CaseSectionTitle
           eyebrow="SPATIAL REFERENCE"
           title="从校园地图建立虚拟场景的总体布局"
-          body="我先根据学校地图确定 Block A-H、停车区域、道路和主要通道之间的关系，再将这些区域转化为 Unity 场景中的建筑与可探索路线。组合图上方是学校地图，下方是项目的 Unity 校园俯瞰图。"
+          body="我先根据学校地图确定 Block A-H、停车区域、道路和主要通道之间的关系，再将这些区域转化为 Unity 场景中的建筑与可探索路线。"
         />
         <div className="ftsm-blueprint-layout">
           {blueprint ? (
             <ProjectFigure
               item={blueprint}
-              label="上方 · FTSM 校园地图"
-              note="下方 · UKM Green Campus Rescue VR 的 Unity 俯瞰图"
+              note="上方为 FTSM 校园地图，下方为 UKM Green Campus Rescue VR 的 Unity 俯览图，用于核对九个任务区域、道路和建筑之间的总体关系。"
               onOpen={onOpen}
             />
           ) : null}
@@ -78,12 +77,12 @@ export function FtsmVrLayout({ project, onOpen }: { project: ProjectItem; onOpen
         <CaseSectionTitle
           eyebrow="GAMEPLAY SYSTEM"
           title="用区域任务、物体交互和地图进度组织 VR 玩法"
-          body="九个区域分别包含五项任务。玩家完成一个区域中的全部任务后，该区域会在地图上被点亮，全部完成后触发古树复苏动画。"
+          body="九个区域分别包含五项任务。玩家完成一个区域中的全部任务后，该区域会在地图上被点亮；全部完成后触发古树复苏结局动画。"
         />
         <div className="ftsm-gameplay-grid">
           {[
             ["探索九个区域", "玩家进入 Block A-H 和 Car Parking，在房间、走廊和室外区域中寻找尚未完成的环保任务。"],
-            ["完成环保操作", "任务包括收集垃圾、关闭灯、关闭风扇、关闭电脑和浇灌植物。垃圾需要先放入背包，再投入垃圾桶。"],
+            ["完成环保操作", "任务包括收集垃圾、关灯、关风扇、关闭电脑和浇灌植物。垃圾需要先放入背包，再投入垃圾桶。"],
             ["更新区域进度", "每个区域完成五项任务后会在地图上点亮；当九个区域全部完成时，系统播放古树复苏结局动画。"],
           ].map(([title, body]) => (
             <article key={title}>
@@ -114,9 +113,9 @@ export function FtsmVrLayout({ project, onOpen }: { project: ProjectItem; onOpen
           className="ftsm-result-row"
           onOpen={onOpen}
           items={[
-            ...(ground ? [{ media: ground, label: "地面浏览视角" }] : []),
-            ...(aerial ? [{ media: aerial, label: "总体空间布局" }] : []),
-            ...(compare ? [{ media: compare, label: "数字模型与现场对照" }] : []),
+            ...(ground ? [{ media: ground }] : []),
+            ...(aerial ? [{ media: aerial }] : []),
+            ...(compare ? [{ media: compare }] : []),
           ] as Array<{ media: ProjectMedia; label?: string }>}
         />
       </section>
@@ -140,12 +139,12 @@ export function FtsmVrOutcome() {
           <dd>包含 Block A-H、Car Parking、校园路线、环保任务、地图进度和最终结局动画。</dd>
         </div>
         <div>
-          <dt>技术重点</dt>
-          <dd>Unity 场景搭建、VR 移动与抓取、碰撞处理、任务状态、区域完成逻辑和实时运行表现。</dd>
+          <dt>技术实现</dt>
+          <dd>使用 Unity、C# 和 OpenXR 实现 VR 移动、抓取、碰撞处理、任务状态和区域完成逻辑。</dd>
         </div>
         <div>
-          <dt>项目收获</dt>
-          <dd>将真实校园资料转化为可交互 VR 游戏，并把环境教育目标组织成清晰的探索与反馈循环。</dd>
+          <dt>项目结果</dt>
+          <dd>完成 9 个校园区域、45 项区域任务、5 类环保操作和 1 个最终结局动画。</dd>
         </div>
       </dl>
     </section>

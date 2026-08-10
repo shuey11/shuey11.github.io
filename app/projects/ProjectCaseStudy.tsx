@@ -9,22 +9,25 @@ import {
   GoodOmensOverview,
 } from "./components/good-omens/GoodOmensCase";
 import { FtsmVrLayout, FtsmVrOutcome, FtsmVrOverview } from "./components/ftsm-vr/FtsmVrCase";
-import { TravelBoardLayout, TravelBoardOutcome, TravelBoardOverview } from "./components/travel-board/TravelBoardCase";
-import { HotelEaseLayout, HotelEaseOutcome, HotelEaseOverview } from "./components/hotel-ease/HotelEaseCase";
-import { DrawingArtLayout, DrawingArtOutcome, DrawingArtOverview } from "./components/drawing-art/DrawingArtCase";
+import {
+  TravelBoardLayout,
+  TravelBoardOutcome,
+  TravelBoardOverview,
+} from "./components/travel-board/TravelBoardCase";
+import {
+  HotelEaseLayout,
+  HotelEaseOutcome,
+  HotelEaseOverview,
+} from "./components/hotel-ease/HotelEaseCase";
+import {
+  DrawingArtLayout,
+  DrawingArtOutcome,
+  DrawingArtOverview,
+} from "./components/drawing-art/DrawingArtCase";
+import { CaseSectionTitle, EqualHeightMediaRow, OpenImage } from "./components/shared/CasePrimitives";
 
 type ProjectCaseStudyProps = {
   project: ProjectItem;
-};
-
-type OpenImage = (item: ProjectMedia) => void;
-
-type MediaCardProps = {
-  item: ProjectMedia;
-  className?: string;
-  label?: string;
-  frame?: "phone" | "browser" | "film" | "plain";
-  onOpen: OpenImage;
 };
 
 function Arrow() {
@@ -39,70 +42,12 @@ function mediaByFile(project: ProjectItem, fileName: string) {
   return project.gallery.find((item) => item.src.endsWith(fileName));
 }
 
-function MediaCard({ item, className = "", label, frame = "plain", onOpen }: MediaCardProps) {
-  return (
-    <button
-      className={`case-media case-media-${frame} ${className}`}
-      type="button"
-      onClick={() => onOpen(item)}
-      aria-label={`查看大图：${item.title ?? item.alt}`}
-    >
-      {label ? <span className="case-media-label">{label}</span> : null}
-      <img src={item.src} alt={item.alt} loading="lazy" />
-      {item.title ? <strong>{item.title}</strong> : null}
-    </button>
-  );
-}
-
-function RiseUpFigure({
-  item,
-  className = "",
-  label,
-  onOpen,
-}: {
-  item: ProjectMedia;
-  className?: string;
-  label?: string;
-  onOpen: OpenImage;
-}) {
-  return (
-    <figure className={`riseup-media-figure ${className}`}>
-      <button type="button" onClick={() => onOpen(item)} aria-label={`查看大图：${item.title ?? item.alt}`}>
-        <img src={item.src} alt={item.alt} loading="lazy" />
-      </button>
-      <figcaption>
-        {label ? <span>{label}</span> : null}
-        {item.title ? <strong>{item.title}</strong> : null}
-        {item.caption ? <p>{item.caption}</p> : null}
-      </figcaption>
-    </figure>
-  );
-}
-
-function SectionTitle({
-  eyebrow,
-  title,
-  body,
-}: {
-  eyebrow: string;
-  title: string;
-  body?: string;
-}) {
-  return (
-    <div className="case-section-title">
-      <p>{eyebrow}</p>
-      <h2>{title}</h2>
-      {body ? <span>{body}</span> : null}
-    </div>
-  );
-}
-
 function HeroMedia({ project }: { project: ProjectItem }) {
   const orientation = project.mediaOrientation ?? "landscape";
   const fit = project.mediaFit ?? "cover";
-  const riseupClass = project.slug === "riseup" ? " riseup-hero-media" : "";
-  const bookshopClass = project.slug === "good-omens-bookshop" ? " goodomens-hero-media" : "";
   const specificHeroClass = [
+    project.slug === "riseup" ? " riseup-hero-media" : "",
+    project.slug === "good-omens-bookshop" ? " goodomens-hero-media" : "",
     project.slug === "ftsm-vr" ? " ftsm-hero-media" : "",
     project.slug === "travel-board-builder" ? " travel-hero-media" : "",
     project.slug === "hotel-booking" ? " hotel-hero-media" : "",
@@ -110,7 +55,9 @@ function HeroMedia({ project }: { project: ProjectItem }) {
   ].join("");
 
   return (
-    <div className={`case-hero-visual case-hero-visual-${orientation} case-hero-visual-fit-${fit}${riseupClass}${bookshopClass}${specificHeroClass}`}>
+    <div
+      className={`case-hero-visual case-hero-visual-${orientation} case-hero-visual-fit-${fit}${specificHeroClass}`}
+    >
       {project.video ? (
         <video
           src={project.video}
@@ -131,19 +78,19 @@ function HeroMedia({ project }: { project: ProjectItem }) {
 function RiseUpOverview() {
   const cards = [
     {
-      eyebrow: "BACKGROUND",
-      title: "项目背景",
-      body: "RiseUp 面向在课堂发言、与陌生人交流、向讲师提问或参与小组讨论时感到紧张的大学生。项目参考 CBT 与 iCBT 中的渐进练习、认知重构和自我监测，将相关方法转化为可在手机中完成的短任务。",
+      eyebrow: "PROJECT",
+      title: "项目简介",
+      body: "面向大学生社交信心训练的 Android 应用，通过分级社交任务、互动练习、即时反馈和 3D Avatar 成长，帮助用户持续完成并记录社交练习。",
     },
     {
-      eyebrow: "MY ROLE",
-      title: "我的角色",
-      body: "个人毕业设计。独立完成需求调研、问卷分析、功能规划、交互设计、Flutter 开发、Firebase 数据管理、Unity Avatar 集成、功能测试和用户验收测试。",
+      eyebrow: "MY WORK",
+      title: "我的工作",
+      body: "个人毕业设计。独立完成需求调研、问卷分析、原型设计、数据结构、Flutter 应用开发、Firebase 数据管理、Unity Avatar 集成、测试及用户验收；构建 7 类社交场景 × 5 级难度任务体系，并设计 10 类互动训练。",
     },
     {
-      eyebrow: "GOAL",
-      title: "项目目标",
-      body: "通过个性化微任务、互动练习和 Avatar 即时反馈降低开始练习的门槛。系统根据用户选择的场景、练习偏好和历史结果调整后续任务难度。",
+      eyebrow: "IMPLEMENTATION",
+      title: "技术实现",
+      body: "使用 Flutter/Dart 构建页面、任务流程和推荐逻辑，使用 Firebase Authentication 完成用户认证、Cloud Firestore 持久化用户与练习数据；根据练习前后的紧张度和信心变化动态调整推荐难度，并将任务结果与 Unity 3D Avatar 动作及成长反馈联动。",
     },
     {
       eyebrow: "STACK",
@@ -172,31 +119,7 @@ function Overview({ project }: { project: ProjectItem }) {
   if (project.slug === "travel-board-builder") return <TravelBoardOverview />;
   if (project.slug === "hotel-booking") return <HotelEaseOverview />;
   if (project.slug === "drawing-art-supplies") return <DrawingArtOverview />;
-
-  return (
-    <section className="case-overview-redesign">
-      <article>
-        <span>Background</span>
-        <p>{project.summary}</p>
-      </article>
-      {project.role ? (
-        <article>
-          <span>My Role</span>
-          <p>{project.role}</p>
-        </article>
-      ) : null}
-      {project.challenge ? (
-        <article>
-          <span>Goal</span>
-          <p>{project.challenge}</p>
-        </article>
-      ) : null}
-      <article>
-        <span>Stack</span>
-        <p>{project.technologies.join(" · ")}</p>
-      </article>
-    </section>
-  );
+  return null;
 }
 
 function RiseUpLayout({ project, onOpen }: ProjectCaseStudyProps & { onOpen: OpenImage }) {
@@ -206,398 +129,62 @@ function RiseUpLayout({ project, onOpen }: ProjectCaseStudyProps & { onOpen: Ope
   const completion = mediaByFile(project, "task-completion.jpg");
   const avatar = mediaByFile(project, "avatar-customisation.jpg");
   const thought = mediaByFile(project, "thought-check.jpg");
-  const coreCards = [
-    {
-      eyebrow: "PERSONALISED TASKS",
-      title: "个性化微任务推荐",
-      body: "系统结合困难场景、偏好时长和练习前后的信心变化调整任务等级。练习受挫时降低难度，连续取得进步时提高推荐等级。",
-      tags: ["7 个沟通场景", "每个场景 5 个等级", "根据练习结果调整", "支持偏好时长"],
-    },
-    {
-      eyebrow: "AVATAR FEEDBACK",
-      title: "3D Avatar 即时反馈",
-      body: "Avatar 在任务推荐、开始、完成和升级等阶段播放不同动作，并配合成长积分和信心变化展示练习结果。",
-      tags: ["推荐动作", "开始反馈", "完成反馈", "升级反馈"],
-    },
-    {
-      eyebrow: "AVATAR CUSTOMISATION",
-      title: "Avatar 个性化定制",
-      body: "用户可以选择性别、文化风格、脸型、发型、服装和配饰，创建持续出现在任务和成长页面中的虚拟伙伴。",
-      tags: ["性别", "文化风格", "脸型与发型", "服装与配饰"],
-    },
-  ];
-  const cbtCards = [
-    {
-      eyebrow: "GRADED PRACTICE",
-      title: "渐进式情境练习",
-      body: "不同沟通场景按难度分级，用于组织从低难度到高难度的短任务。",
-    },
-    {
-      eyebrow: "COGNITIVE RESTRUCTURING",
-      title: "认知重构与 Thought Check",
-      body: "Thought Check 用于记录和重新审视自动化想法，并通过证据问题与平衡想法提示支持反思。",
-    },
-    {
-      eyebrow: "SELF-MONITORING",
-      title: "练习前后自我监测",
-      body: "练习前后记录的紧张度、信心变化和简短反思会参与成长记录与后续推荐。",
-    },
-  ];
-  const flowSteps = [
-    {
-      n: "01",
-      title: "选择任务",
-      body: "用户可以从个性化推荐或任务库中选择需要练习的沟通场景和任务。",
-      media: taskLibrary,
-    },
-    {
-      n: "02",
-      title: "完成互动练习",
-      body: "任务通过分支选择、排序、语音练习、证据挑战、情绪记录和短反思等方式，引导用户主动参与，而不是被动阅读。",
-      media: interactive,
-    },
-    {
-      n: "03",
-      title: "记录结果与反馈",
-      body: "完成后记录练习前后的紧张度与信心变化，展示成长积分和 Avatar 反馈，并保存任务回答与反思。",
-      media: completion,
-    },
-  ].filter((step) => step.media) as Array<{ n: string; title: string; body: string; media: ProjectMedia }>;
-  const featureDetails = [
-    {
-      eyebrow: "PERSONALISED RECOMMENDATION",
-      title: "个性化任务推荐",
-      body: "首页根据用户选择的困难场景、偏好时长和历史练习结果展示推荐任务。推荐卡包含任务场景、预计时长、任务难度和 Avatar 提示，让用户可以快速开始一次练习。",
-      media: home,
-      reverse: false,
-    },
-    {
-      eyebrow: "AVATAR SYSTEM",
-      title: "Avatar 定制与成长反馈",
-      body: "用户可以选择性别、文化风格、脸型、发型、服装和配饰。完成任务后，Avatar 会根据任务结果、反馈风格和等级变化播放对应动作，并配合成长积分和信心进度展示用户的练习成果。",
-      media: avatar,
-      reverse: true,
-    },
-    {
-      eyebrow: "THOUGHT CHECK",
-      title: "Thought Check",
-      body: "Thought Check 用于记录困扰用户的自动化想法，并通过本地规则识别常见思维模式。系统提供证据问题、平衡想法建议和可执行的小步骤，帮助用户进行结构化反思。分析结果只在本地显示，不上传云端。",
-      media: thought,
-      reverse: false,
-    },
-  ].filter((detail) => detail.media) as Array<{
-    eyebrow: string;
-    title: string;
-    body: string;
-    media: ProjectMedia;
-    reverse: boolean;
-  }>;
 
   return (
     <div className="riseup-case-flow">
       <section className="case-section riseup-core-experience">
-        <SectionTitle
-          eyebrow="CORE EXPERIENCE"
-          title="围绕任务推荐、即时反馈和个人定制设计核心体验"
-          body="RiseUp 的核心功能围绕任务选择、练习结果记录和 Avatar 反馈展开。三项功能共同决定用户看到什么任务、如何获得反馈，以及 Avatar 如何进入练习流程。"
+        <CaseSectionTitle
+          eyebrow="TASK SYSTEM"
+          title="70 个分级任务如何进入练习流程"
+          body="用户可以从首页推荐或任务库进入练习。系统保存场景、难度、紧张度、信心变化和练习反馈，再用于后续推荐难度调整。"
         />
-        <div className="riseup-core-grid">
-          {coreCards.map((card) => (
-            <article key={card.eyebrow} className="riseup-core-card">
-              <div className="riseup-core-copy">
-                <span>{card.eyebrow}</span>
-                <h3>{card.title}</h3>
-                <p>{card.body}</p>
-                <div className="riseup-tag-list">
-                  {card.tags.map((tag) => (
-                    <small key={tag}>{tag}</small>
-                  ))}
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
-      </section>
-
-      <section className="case-section riseup-cbt-foundation">
-        <SectionTitle
-          eyebrow="DESIGN FOUNDATION"
-          title="将 CBT 练习原则转化为移动端功能"
-          body="渐进练习用于组织不同难度的沟通任务；Thought Check 用于记录和重新审视自动化想法；练习前后自我监测的数据也会参与后续推荐。"
+        <EqualHeightMediaRow
+          className="riseup-flow-grid"
+          onOpen={onOpen}
+          items={[
+            ...(home ? [{ media: home, note: "根据用户偏好和练习历史展示推荐任务入口。" }] : []),
+            ...(taskLibrary ? [{ media: taskLibrary, note: "按 7 类社交场景和 5 级难度组织 70 个微任务。" }] : []),
+            ...(interactive ? [{ media: interactive, note: "通过选择、排序、记录和反思等操作收集练习结果。" }] : []),
+          ]}
         />
-        <div className="riseup-foundation-grid">
-          {cbtCards.map((card) => (
-            <article key={card.eyebrow}>
-              <span>{card.eyebrow}</span>
-              <h3>{card.title}</h3>
-              <p>{card.body}</p>
-            </article>
-          ))}
-        </div>
-        <aside className="riseup-scope-note">
-          <h3>使用范围说明</h3>
-          <p>
-            RiseUp 是非医疗性质的自助练习工具，不提供心理诊断，也不能替代专业心理服务。
-          </p>
-        </aside>
-      </section>
-
-      <section className="case-section riseup-practice-flow">
-        <SectionTitle
-          eyebrow="PRACTICE FLOW"
-          title="练习结果如何影响下一次推荐"
-          body="用户从推荐或任务库进入练习，完成互动任务并记录紧张度与信心变化。系统保存练习结果，并据此调整下一次推荐等级。"
-        />
-        <div className="riseup-flow-grid">
-          {flowSteps.map((step) => (
-            <article key={step.n} className="riseup-flow-step">
-              <div>
-                <span>{step.n}</span>
-                <h3>{step.title}</h3>
-                <p>{step.body}</p>
-              </div>
-              <RiseUpFigure item={step.media} onOpen={onOpen} />
-            </article>
-          ))}
-        </div>
-        <aside className="riseup-feedback-loop">
-          <h3>练习结果参与下一次推荐</h3>
-          <p>
-            选择推荐或任务库中的任务 → 完成互动练习 → 记录紧张度与信心变化 → 保存练习结果 → 调整下一次推荐等级。
-          </p>
-          <div aria-label="反馈循环路径">
-            <span>选择任务</span>
-            <span>互动练习</span>
-            <span>保存结果</span>
-            <span>调整推荐等级</span>
-          </div>
-        </aside>
       </section>
 
       <section className="case-section riseup-feature-details">
-        {featureDetails.map((detail) => (
-          <article className={detail.reverse ? "is-reversed" : ""} key={detail.eyebrow}>
-            <div className="riseup-feature-copy">
-              <span>{detail.eyebrow}</span>
-              <h3>{detail.title}</h3>
-              <p>{detail.body}</p>
-            </div>
-            <RiseUpFigure item={detail.media} onOpen={onOpen} />
-          </article>
-        ))}
+        <CaseSectionTitle
+          eyebrow="FEEDBACK & RECORDS"
+          title="练习结果、Thought Check 和 Avatar 反馈"
+          body="完成页保存练习前后的状态变化；Thought Check 用于结构化记录自动化想法；Avatar 根据任务阶段和结果展示动作反馈。"
+        />
+        <EqualHeightMediaRow
+          onOpen={onOpen}
+          items={[
+            ...(completion ? [{ media: completion, note: "记录紧张度、信心变化、反思和任务结果。" }] : []),
+            ...(thought ? [{ media: thought, note: "记录想法并显示思维模式和反思提示。" }] : []),
+            ...(avatar ? [{ media: avatar, note: "用户定制的角色用于练习页面和成长反馈。" }] : []),
+          ]}
+        />
       </section>
     </div>
   );
 }
 
-function BookshopLayout({ project, onOpen }: ProjectCaseStudyProps & { onOpen: OpenImage }) {
-  if (project.slug === "good-omens-bookshop") {
-    return <GoodOmensLayout project={project} onOpen={onOpen} />;
-  }
-
-  const [d1, d2, d3, d4] = project.gallery;
-
-  return (
-    <>
-      <section className="case-section case-film-strip">
-        <SectionTitle eyebrow="Film Strip" title="用电影画幅阅读书店空间的前景、中景与动线。" body={project.solution} />
-        <div className="film-strip">
-          {project.gallery.map((item, index) => (
-            <MediaCard item={item} key={item.src} label={`FRAME ${index + 1}`} frame="film" onOpen={onOpen} />
-          ))}
-        </div>
-      </section>
-      <section className="case-section case-cinematic-grid">
-        <MediaCard item={d4} className="space-map" frame="film" onOpen={onOpen} />
-        <div className="cinematic-stack">
-          <MediaCard item={d1} frame="film" onOpen={onOpen} />
-          <MediaCard item={d2} frame="film" onOpen={onOpen} />
-        </div>
-        <div className="cinematic-copy">
-          <p>Design & Development</p>
-          <h2>从整体布局到书桌、电话、书架和旋转楼梯，重建一个可被镜头游走的 3D 书店。</h2>
-          <span>{project.technologies.join(" · ")}</span>
-        </div>
-        <MediaCard item={d3} className="stair-detail" frame="film" onOpen={onOpen} />
-      </section>
-    </>
-  );
-}
-
-function VrLayout({ project, onOpen }: ProjectCaseStudyProps & { onOpen: OpenImage }) {
-  const [map, entry, aerial, compare] = project.gallery;
-
-  return (
-    <>
-      <section className="case-section case-blueprint">
-        <SectionTitle eyebrow="Spatial Blueprint" title="从平面参考到可进入的虚拟建筑环境。" body={project.solution} />
-        <div className="blueprint-grid">
-          <MediaCard item={map} className="blueprint-map" frame="plain" onOpen={onOpen} />
-          <div className="blueprint-notes">
-            <article><span>01</span><p>平面图与 Unity 俯视场景对照，用来建立空间关系。</p></article>
-            <article><span>02</span><p>入口、道路、停车区和建筑外观组成主要导航路径。</p></article>
-            <article><span>03</span><p>真实建筑对照用于校准外观和空间识别度。</p></article>
-          </div>
-        </div>
-      </section>
-      <section className="case-section case-vr-matrix">
-        <MediaCard item={entry} className="wide" label="ENTRY" frame="plain" onOpen={onOpen} />
-        <MediaCard item={aerial} label="AERIAL" frame="plain" onOpen={onOpen} />
-        <MediaCard item={compare} label="COMPARE" frame="plain" onOpen={onOpen} />
-      </section>
-    </>
-  );
-}
-
-function TravelLayout({ project, onOpen }: ProjectCaseStudyProps & { onOpen: OpenImage }) {
-  const setup = mediaByFile(project, "starting-setup.jpg");
-  const unlock = mediaByFile(project, "unlock-location.jpg");
-  const location = mediaByFile(project, "location-editor.jpg");
-  const board = mediaByFile(project, "board-editor.jpg");
-  const event = mediaByFile(project, "event-editor.png");
-  const journal = mediaByFile(project, "assets-journal.png");
-  const gameplay = mediaByFile(project, "gameplay.jpg");
-  const create = [setup, unlock, location].filter(Boolean) as ProjectMedia[];
-  const collage = [board, event, journal].filter(Boolean) as ProjectMedia[];
-
-  return (
-    <>
-      <section className="case-section case-board-flow">
-        <SectionTitle eyebrow="Create Board" title="从初始设置到地点解锁，建立一张可编辑旅行棋盘。" body={project.solution} />
-        <div className="board-track">
-          {create.map((item, index) => (
-            <MediaCard item={item} key={item.src} label={`STEP ${index + 1}`} frame="phone" onOpen={onOpen} />
-          ))}
-        </div>
-      </section>
-      <section className="case-section case-board-collage">
-        <div className="board-copy">
-          <p>Design & Development</p>
-          <h2>棋盘、事件卡和旅行日记像票券一样拼合，支持配置后进入游玩。</h2>
-        </div>
-        {collage.map((item, index) => (
-          <MediaCard item={item} key={item.src} className={`ticket ticket-${index + 1}`} frame="phone" onOpen={onOpen} />
-        ))}
-        {gameplay ? <MediaCard item={gameplay} className="gameplay" frame="phone" onOpen={onOpen} /> : null}
-      </section>
-    </>
-  );
-}
-
-function HotelLayout({ project, onOpen }: ProjectCaseStudyProps & { onOpen: OpenImage }) {
-  const services = mediaByFile(project, "booking-services.jpg");
-  const room = mediaByFile(project, "room-details.png");
-  const management = mediaByFile(project, "booking-management.jpg");
-  const floor = mediaByFile(project, "floor-map.png");
-  const role = mediaByFile(project, "role-sync.jpg");
-
-  return (
-    <>
-      <section className="case-section case-role-overview">
-        <SectionTitle eyebrow="Role System" title="Guest、Staff、Admin 共享同一条预订管理逻辑。" body={project.solution} />
-        <div className="role-pillars">
-          {["Guest", "Staff", "Admin"].map((roleName, index) => (
-            <article key={roleName}>
-              <span>0{index + 1}</span>
-              <h3>{roleName}</h3>
-              <p>围绕浏览、预订、管理与状态同步形成多角色流程。</p>
-            </article>
-          ))}
-        </div>
-      </section>
-      <section className="case-section case-service-map">
-        {services ? <MediaCard item={services} className="side left" frame="phone" onOpen={onOpen} /> : null}
-        {role ? <MediaCard item={role} className="center" frame="phone" onOpen={onOpen} /> : null}
-        {management ? <MediaCard item={management} className="side right" frame="phone" onOpen={onOpen} /> : null}
-      </section>
-      <section className="case-section case-room-pair">
-        {floor ? <MediaCard item={floor} className="large" frame="phone" onOpen={onOpen} /> : null}
-        {room ? <MediaCard item={room} className="small" frame="phone" onOpen={onOpen} /> : null}
-        <div>
-          <p>Booking Flow</p>
-          <h2>从浏览服务、查看房间，到地图选房和后台管理，流程被整理成清晰的移动端路径。</h2>
-        </div>
-      </section>
-    </>
-  );
-}
-
-function DrawingLayout({ project, onOpen }: ProjectCaseStudyProps & { onOpen: OpenImage }) {
-  const login = mediaByFile(project, "login.png");
-  const list = mediaByFile(project, "products-list.png");
-  const detail = mediaByFile(project, "product-detail.png");
-  const customers = mediaByFile(project, "customers.png");
-  const order = mediaByFile(project, "order-details.png");
-  const invoice = mediaByFile(project, "invoice.png");
-
-  return (
-    <>
-      <section className="case-section case-dashboard-bento">
-        <SectionTitle eyebrow="Data Workspace" title="商品管理和订单数据被组织成后台工作台。" body={project.solution} />
-        {list ? <MediaCard item={list} className="browser-main" frame="browser" onOpen={onOpen} /> : null}
-        {detail ? <MediaCard item={detail} className="browser-side" frame="browser" onOpen={onOpen} /> : null}
-        {login ? <MediaCard item={login} className="login-card" frame="browser" onOpen={onOpen} /> : null}
-      </section>
-      <section className="case-section case-business-triptych">
-        <SectionTitle eyebrow="Business Flow" title="客户、订单明细和发票构成完整业务链路。" />
-        <div>
-          {[customers, order, invoice].filter(Boolean).map((item) => (
-            <MediaCard item={item as ProjectMedia} key={(item as ProjectMedia).src} frame="browser" onOpen={onOpen} />
-          ))}
-        </div>
-      </section>
-    </>
-  );
-}
-
 function LayoutRenderer({ project, onOpen }: ProjectCaseStudyProps & { onOpen: OpenImage }) {
-  switch (project.layout) {
-    case "mobile-journey":
+  switch (project.slug) {
+    case "riseup":
       return <RiseUpLayout project={project} onOpen={onOpen} />;
-    case "cinematic-3d":
-      return <BookshopLayout project={project} onOpen={onOpen} />;
-    case "spatial-vr":
-      if (project.slug === "ftsm-vr") return <FtsmVrLayout project={project} onOpen={onOpen} />;
-      return <VrLayout project={project} onOpen={onOpen} />;
-    case "board-collage":
-      if (project.slug === "travel-board-builder") return <TravelBoardLayout project={project} onOpen={onOpen} />;
-      return <TravelLayout project={project} onOpen={onOpen} />;
-    case "service-flow":
-      if (project.slug === "hotel-booking") return <HotelEaseLayout project={project} onOpen={onOpen} />;
-      return <HotelLayout project={project} onOpen={onOpen} />;
-    case "dashboard-editorial":
-      if (project.slug === "drawing-art-supplies") return <DrawingArtLayout project={project} onOpen={onOpen} />;
-      return <DrawingLayout project={project} onOpen={onOpen} />;
+    case "good-omens-bookshop":
+      return <GoodOmensLayout project={project} onOpen={onOpen} />;
+    case "ftsm-vr":
+      return <FtsmVrLayout project={project} onOpen={onOpen} />;
+    case "travel-board-builder":
+      return <TravelBoardLayout project={project} onOpen={onOpen} />;
+    case "hotel-booking":
+      return <HotelEaseLayout project={project} onOpen={onOpen} />;
+    case "drawing-art-supplies":
+      return <DrawingArtLayout project={project} onOpen={onOpen} />;
     default:
       return null;
   }
-}
-
-function DefaultOutcome({ project }: { project: ProjectItem }) {
-  return (
-    <section className="case-outcome-redesign">
-      <div>
-        <p>Outcome</p>
-        <h2>{project.summary}</h2>
-      </div>
-      <dl>
-        {project.role ? (
-          <div>
-            <dt>我的角色</dt>
-            <dd>{project.role}</dd>
-          </div>
-        ) : null}
-        <div>
-          <dt>项目结果</dt>
-          <dd>{project.solution ?? project.summary}</dd>
-        </div>
-        <div>
-          <dt>可继续改进</dt>
-          <dd>后续可以继续补充更完整的交互说明、可访问性细节和更多真实使用场景。</dd>
-        </div>
-      </dl>
-    </section>
-  );
 }
 
 function RiseUpOutcome() {
@@ -605,9 +192,9 @@ function RiseUpOutcome() {
     <section className="case-outcome-redesign riseup-outcome">
       <div>
         <p>OUTCOME</p>
-        <h2>将沟通练习组织为可记录、可调整的移动流程</h2>
+        <h2>将社交练习组织为可记录、可调整的移动端流程</h2>
         <span>
-          最终应用实现了任务推荐、互动练习、练习记录、Thought Check、Avatar 定制与动作反馈。17 项功能测试全部通过，10 名目标用户参与 UAT，平均评分为 4.92 / 5。
+          最终应用实现任务推荐、互动练习、练习记录、Thought Check、Avatar 定制与动作反馈。17 项功能测试全部通过，UAT 平均评分为 4.92 / 5。
         </span>
       </div>
       <dl>
@@ -617,19 +204,34 @@ function RiseUpOutcome() {
         </div>
         <div>
           <dt>实现结果</dt>
-          <dd>完成 7 个沟通场景、70 个微任务、10 类互动形式、个性化推荐、Thought Check、Avatar 定制、动作反馈和成长记录。</dd>
+          <dd>完成 7 类沟通场景、70 个微任务、10 类互动训练、个性化推荐、Thought Check、Avatar 定制和成长记录。</dd>
         </div>
         <div>
           <dt>测试结果</dt>
-          <dd>UAT 反馈主要集中在功能引导、Thought Check 示例，以及扩展更多场景、语言和 Avatar 选项。</dd>
-        </div>
-        <div>
-          <dt>后续方向</dt>
-          <dd>继续优化推荐规则、交互说明与可访问性细节，并扩展更多真实沟通场景、语言和 Avatar 定制内容。</dd>
+          <dd>17 项测试全部通过，用户验收测试平均评分 4.92 / 5。</dd>
         </div>
       </dl>
     </section>
   );
+}
+
+function OutcomeRenderer({ project }: { project: ProjectItem }) {
+  switch (project.slug) {
+    case "riseup":
+      return <RiseUpOutcome />;
+    case "good-omens-bookshop":
+      return <GoodOmensOutcome />;
+    case "ftsm-vr":
+      return <FtsmVrOutcome />;
+    case "travel-board-builder":
+      return <TravelBoardOutcome />;
+    case "hotel-booking":
+      return <HotelEaseOutcome />;
+    case "drawing-art-supplies":
+      return <DrawingArtOutcome />;
+    default:
+      return null;
+  }
 }
 
 export default function ProjectCaseStudy({ project }: ProjectCaseStudyProps) {
@@ -637,12 +239,6 @@ export default function ProjectCaseStudy({ project }: ProjectCaseStudyProps) {
   const previous = relatedProject(project.previousProject);
   const next = relatedProject(project.nextProject);
   const metrics = useMemo(() => project.metrics.filter(Boolean), [project.metrics]);
-  const isRiseUp = project.slug === "riseup";
-  const isGoodOmens = project.slug === "good-omens-bookshop";
-  const isFtsmVr = project.slug === "ftsm-vr";
-  const isTravelBoard = project.slug === "travel-board-builder";
-  const isHotelEase = project.slug === "hotel-booking";
-  const isDrawingArt = project.slug === "drawing-art-supplies";
 
   useEffect(() => {
     if (!activeImage) return;
@@ -694,21 +290,7 @@ export default function ProjectCaseStudy({ project }: ProjectCaseStudyProps) {
           </section>
         ) : null}
         <LayoutRenderer project={project} onOpen={setActiveImage} />
-        {isRiseUp ? (
-          <RiseUpOutcome />
-        ) : isGoodOmens ? (
-          <GoodOmensOutcome />
-        ) : isFtsmVr ? (
-          <FtsmVrOutcome />
-        ) : isTravelBoard ? (
-          <TravelBoardOutcome />
-        ) : isHotelEase ? (
-          <HotelEaseOutcome />
-        ) : isDrawingArt ? (
-          <DrawingArtOutcome />
-        ) : (
-          <DefaultOutcome project={project} />
-        )}
+        <OutcomeRenderer project={project} />
 
         <section className="case-next-redesign">
           {previous ? (

@@ -11,19 +11,19 @@ export function GoodOmensOverview() {
       className="goodomens-overview-cards"
       cards={[
         {
-          eyebrow: "BACKGROUND",
-          title: "项目背景",
-          body: "电视剧画面只展示经过摄影机构图后的局部空间，没有完整平面图。本项目通过比较多个镜头中的立柱、书架、门窗、楼梯、家具和雕像，推导它们在统一空间中的相对位置。",
+          eyebrow: "PROJECT",
+          title: "项目简介",
+          body: "根据《Good Omens》中多个影视镜头提供的空间线索，反推并重建 Aziraphale 书店的完整三维室内环境。",
         },
         {
-          eyebrow: "MY ROLE",
-          title: "我的角色",
+          eyebrow: "MY WORK",
+          title: "我的工作",
           body: "个人三维环境项目。独立完成影视画面整理、空间比例推导、环境结构搭建、家具与陈设建模、材质调整、灯光布置、摄影机动画和最终渲染。",
         },
         {
-          eyebrow: "GOAL",
-          title: "项目目标",
-          body: "项目不是只复制单一镜头，而是建立一套能从不同方向观察的连续书店空间，同时保留原作深色木质结构、暖色照明和密集旧书陈设。",
+          eyebrow: "IMPLEMENTATION",
+          title: "技术实现",
+          body: "比较不同镜头中重复出现的立柱、门窗、书架、楼梯、家具和雕像，推导它们在统一空间中的相对位置；使用 3ds Max 建立可从不同方向观察的连续场景，并通过材质、暖色局部照明和摄影机动画还原书店视觉特征。",
         },
         {
           eyebrow: "STACK",
@@ -97,7 +97,7 @@ function GoodOmensReferenceComparison({ project, onOpen }: { project: ProjectIte
       </div>
       <aside className="goodomens-rights-note">
         <p>
-          影视截图仅用于非商业学习项目中的视觉研究与三维重建对照，相关画面版权归原作品权利方所有；三维模型、场景搭建、材质、灯光、动画与渲染部分由宁舒依独立完成。
+          影视截图仅用于非商业学习项目中的视觉研究与三维重建对照；三维模型、场景搭建、材质、灯光、动画与渲染部分由宁舒依独立完成。
         </p>
         <small>
           Television stills are shown only for non-commercial visual study and reconstruction comparison. All 3D modelling, scene assembly, materials, lighting, animation and rendering were completed by Ning Shuyi.
