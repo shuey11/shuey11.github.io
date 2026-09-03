@@ -66,10 +66,10 @@ const coursework = [
 const activities = [
   {
     n: "01",
-    title: "Dean’s List Award ×4",
-    time: "2023—2025",
+    title: "Dean’s List Award ×5",
+    time: "2023—2026",
     meta: "Honour",
-    description: "连续四学期获得马来西亚国立大学院长荣誉名单。",
+    description: "连续五学期获得马来西亚国立大学院长荣誉名单。",
   },
   {
     n: "02",
@@ -90,7 +90,7 @@ const activities = [
 
 const activityRecords = [
   {
-    title: "Dean’s List Award ×4",
+    title: "Dean’s List Award ×5",
     caption: "Dean’s List 获奖记录",
     englishCaption: "Dean’s List Recognition",
     image: "/media/achievements/deans-list.jpg",
@@ -520,7 +520,7 @@ export default function Home() {
               </div>
               <div className="education-stats">
                 <span>
-                  <b>3.70</b>
+                  <b>3.74</b>
                   <small>/ 4.00 CGPA总绩点</small>
                 </span>
               </div>
